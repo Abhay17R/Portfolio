@@ -3,7 +3,7 @@ export const projectData = [
     id: 101, // Unique ID
     title: "Family Management System",
     description: "Centralized MERN platform for family logistics & safety. Features real-time location tracking, emergency alerts, expense coordination, and secure role-based access for 500+ users.",
-    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop", // Connection/Dashboard vibe
+    image: "https://i.postimg.cc/Y96NvKFH/Gemini-Generated-Image-lx6c5mlx6c5mlx6c.png", // Connection/Dashboard vibe
     category: "Web",
     techStack: ["MongoDB", "Express", "React", "Node.js", "Socket.io", "JWT"],
     link: "https://ourhome-omega.vercel.app/", // Yahan Live Link daal
@@ -13,7 +13,7 @@ export const projectData = [
     id: 102,
     title: "ServiceLink Pro",
     description: "Scalable marketplace connecting 200+ professionals. Includes advanced search filters, conflict-free appointment booking, and a real-time chat dashboard powered by Socket.IO.",
-    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop", // Professional/Business vibe
+    image:"https://i.postimg.cc/fTNz740v/image.png", // Professional/Business vibe
     category: "Web",
     techStack: ["MERN Stack", "Socket.IO", "Redux", "JWT", "Tailwind"],
     link: "https://servicelink-gules.vercel.app/", // Yahan Live Link daal
