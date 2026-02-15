@@ -1,0 +1,153 @@
+/* [project]/src/styles/StartMenu.css [app-client] (css) */
+.start-menu-container {
+  -webkit-backdrop-filter: blur(20px);
+  z-index: 1000;
+  background-color: #202020d9;
+  border: 1px solid #ffffff1a;
+  border-radius: 8px;
+  flex-direction: column;
+  width: min(600px, 95vw);
+  height: min(650px, 85vh);
+  padding: 24px;
+  animation: .25s ease-out slideUp;
+  display: flex;
+  position: absolute;
+  bottom: 60px;
+  left: 50%;
+  overflow: hidden;
+  transform: translateX(-50%);
+  box-shadow: 0 4px 30px #00000080;
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translate(-50%, 20px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translate(-50%);
+  }
+}
+
+.start-search-box input {
+  color: #fff;
+  background: #1f1f1f;
+  border: 1px solid #333;
+  border-bottom: 2px solid #0078d4;
+  border-radius: 4px;
+  outline: none;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 10px 15px;
+}
+
+.section-title {
+  color: #fff;
+  justify-content: space-between;
+  margin-bottom: 15px;
+  padding: 0 5px;
+  font-size: 13px;
+  font-weight: 600;
+  display: flex;
+}
+
+.section-title button {
+  color: #ccc;
+  cursor: pointer;
+  background: none;
+  border: none;
+  font-size: 12px;
+}
+
+.apps-grid {
+  grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+  gap: 15px;
+  margin-bottom: 30px;
+  padding: 2px;
+  display: grid;
+  overflow-y: auto;
+}
+
+.app-item {
+  cursor: pointer;
+  border-radius: 4px;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  padding: 10px;
+  transition: all .2s;
+  display: flex;
+}
+
+.app-item:hover {
+  background-color: #ffffff1a;
+}
+
+.app-item img {
+  width: 32px;
+  height: 32px;
+}
+
+.app-item span {
+  color: #fff;
+  text-align: center;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  font-size: 11px;
+  overflow: hidden;
+}
+
+.start-recommended-area {
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+.rec-item {
+  padding: 10px;
+}
+
+.start-footer {
+  background-color: #0003;
+  justify-content: space-between;
+  align-items: center;
+  margin: auto -24px -24px;
+  padding: 15px 40px;
+  display: flex;
+}
+
+.user-profile {
+  color: #fff;
+  cursor: pointer;
+  border-radius: 4px;
+  align-items: center;
+  gap: 12px;
+  padding: 5px 10px;
+  font-size: 12px;
+  display: flex;
+}
+
+.user-profile:hover, .power-btn:hover {
+  background-color: #ffffff1a;
+}
+
+.user-profile img {
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+}
+
+.power-btn {
+  cursor: pointer;
+  border-radius: 4px;
+  padding: 8px;
+}
+
+.power-btn img {
+  width: 20px;
+  height: 20px;
+}
+
+/*# sourceMappingURL=%5Bproject%5D_src_styles_StartMenu_css_bad6b30c._.single.css.map*/

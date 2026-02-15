@@ -3,26 +3,46 @@ import React, { useState, useEffect } from "react";
 import { useOS } from "@/context/OSContext";
 import Taskbar from "./Taskbar";
 import DesktopIcon from "./DesktopIcon";
-import StartMenu from "./StartMenu"; // <-- Import
+import StartMenu from "./StartMenu";
+import WindowFrame from "../ui/windows/WindowFrame"; // <--- Updated Import
+
+// Apps Imports
+import FileExplorer from "../apps/FileExplorer"; 
+import Chrome from "../apps/Chrome";
+
 import "@/styles/Desktop.css"; 
 
 const Desktop = () => {
-  const { osMode } = useOS();
+  const { osMode, windows, openApp } = useOS(); // <--- Context se windows le rahe hain
   const [bgStyle, setBgStyle] = useState({});
-  const [startMenuOpen, setStartMenuOpen] = useState(false); // <-- State for Menu
+  const [startMenuOpen, setStartMenuOpen] = useState(false);
 
-  // Toggle function
+  // --- APP OPEN HANDLERS ---
+  const handleOpenExplorer = () => {
+    openApp("explorer", "File Explorer", "https://img.icons8.com/fluency/48/folder-invoices--v1.png", <FileExplorer />);
+  };
+
+  const handleOpenChrome = () => {
+    openApp("chrome", "Google Chrome", "https://img.icons8.com/color/48/chrome--v1.png", <Chrome />);
+  };
+  
+  const handleOpenTerminal = () => {
+     // Abhi Terminal ka component nahi hai, baad me replace kar dena
+     console.log("Terminal logic coming soon");
+  };
+
+  // Toggle Start Menu
   const toggleStartMenu = (e) => {
     if(e) e.stopPropagation();
     setStartMenuOpen(!startMenuOpen);
   };
 
-  // Close menu when clicking on Wallpaper
+  // Close menus on Desktop Click
   const handleDesktopClick = () => {
     if (startMenuOpen) setStartMenuOpen(false);
   };
 
-  // Chaos Mode Effect
+  // Chaos Mode Effect (Tera purana logic)
   useEffect(() => {
     if (osMode !== "chaos") {
       setBgStyle({});
@@ -39,14 +59,13 @@ const Desktop = () => {
   }, [osMode]);
 
   return (
-    // Add onClick handler to the main container
     <div className="desktop-container" onClick={handleDesktopClick}>
       
       {/* 1. WALLPAPER */}
       <div 
         className="wallpaper-layer"
         style={{
-          backgroundImage: "url('/wallpaper.jpg'), linear-gradient(135deg, #0f2027, #203a43, #2c5364)",
+          backgroundImage: "url('/wallpaper.jpg')",
           ...bgStyle
         }}
       ></div>
@@ -56,45 +75,54 @@ const Desktop = () => {
         <h1 className="hero-name">Abhay kumar Jha</h1> 
       </div>
 
-      {/* 3. DESKTOP ICONS */}
+      {/* 3. DESKTOP ICONS - Ab Context use kar rahe hain */}
       <div className="icons-grid">
         <DesktopIcon 
             label="About Me" 
             iconSrc="https://i.postimg.cc/cLbyKrVB/image.png" 
             onClick={() => console.log("Open About")} 
         />
+        
         <DesktopIcon 
             label="My Projects" 
             iconSrc="https://img.icons8.com/color/48/project-setup.png" 
-            onClick={() => console.log("Open Projects")} 
+            onClick={handleOpenExplorer} 
         />
-        <DesktopIcon 
-            label="Achievements" 
-            iconSrc="https://img.icons8.com/color/48/trophy.png" 
-            onClick={() => console.log("Open Achievements")} 
-        />
+        
         <DesktopIcon 
             label="My Resume" 
             iconSrc="https://img.icons8.com/color/48/pdf-2--v1.png" 
             onClick={() => console.log("Open Resume")} 
         />
+        
         <DesktopIcon 
-            label="Contact Me" 
-            iconSrc="https://img.icons8.com/color/48/gmail-new.png" 
-            onClick={() => console.log("Open Contact")} 
+            label="Browser" 
+            iconSrc="https://img.icons8.com/color/48/chrome--v1.png" 
+            onClick={handleOpenChrome} 
         />
+        
          <DesktopIcon 
             label="Terminal" 
             iconSrc="https://img.icons8.com/color/48/console.png" 
-            onClick={() => console.log("Open Terminal")} 
+            onClick={handleOpenTerminal} 
         />
       </div>
 
-      {/* 4. START MENU (Overlay) */}
+      {/* 4. WINDOWS RENDERING LAYER (Ye naya magic hai) */}
+      {/* Jo bhi window 'windows' array me hogi, wo yahan render hogi */}
+      {windows.map((win) => (
+        <WindowFrame key={win.id} windowData={win} />
+      ))}
+
+      {/* 5. START MENU */}
       <StartMenu isOpen={startMenuOpen} />
 
-      {/* 5. TASKBAR (Pass the Toggle Function) */}
-      <Taskbar onStartClick={toggleStartMenu} />
+      {/* 6. TASKBAR */}
+      <Taskbar 
+        onStartClick={toggleStartMenu} 
+        onExplorerClick={handleOpenExplorer}
+        onChromeClick={handleOpenChrome}
+      />
 
     </div>
   );

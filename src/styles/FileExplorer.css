@@ -1,0 +1,202 @@
+/* Window Container */
+.explorer-window {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%); /* Center me laane ke liye */
+    
+    width: 800px;
+    height: 500px;
+    
+    /* Responsive */
+    max-width: 95vw;
+    max-height: 80vh;
+
+    background-color: rgba(32, 32, 32, 0.9);
+    backdrop-filter: blur(15px);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+    
+    display: flex;
+    flex-direction: column;
+    z-index: 500; /* Start Menu ke neeche, Icons ke upar */
+    animation: popIn 0.2s ease-out;
+    overflow: hidden;
+}
+
+@keyframes popIn {
+    from { opacity: 0; transform: translate(-50%, -45%) scale(0.95); }
+    to { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+/* --- Header --- */
+.explorer-header {
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 10px;
+    background: rgba(255, 255, 255, 0.03);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.window-title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 12px;
+    color: white;
+}
+.window-title img { width: 16px; height: 16px; }
+
+.window-controls {
+    display: flex;
+}
+.control {
+    width: 40px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    font-size: 14px;
+    cursor: pointer;
+}
+.control:hover { background: rgba(255,255,255,0.1); }
+.control.close:hover { background: #e81123; }
+
+/* --- Nav Bar --- */
+.explorer-nav-bar {
+    height: 45px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 10px;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.nav-buttons span {
+    color: white;
+    padding: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    opacity: 0.7;
+}
+.nav-buttons span:hover { opacity: 1; }
+
+.address-bar {
+    flex-grow: 1;
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 4px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    padding: 0 10px;
+    gap: 10px;
+    color: white;
+    font-size: 13px;
+}
+.address-bar img { width: 16px; }
+
+.search-bar input {
+    background: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(255,255,255,0.1);
+    color: white;
+    padding: 5px 10px;
+    border-radius: 4px;
+    outline: none;
+    font-size: 12px;
+    width: 200px;
+}
+
+/* --- Body --- */
+.explorer-body {
+    display: flex;
+    flex-grow: 1; /* Fills remaining height */
+    overflow: hidden;
+}
+
+/* Sidebar */
+.explorer-sidebar {
+    width: 200px;
+    background: rgba(0, 0, 0, 0.1);
+    padding: 10px 5px;
+    border-right: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    color: #ddd;
+    font-size: 13px;
+    transition: 0.2s;
+}
+.sidebar-item:hover { background: rgba(255,255,255,0.05); }
+.sidebar-item.active { background: rgba(255,255,255,0.1); color: #fff; }
+.sidebar-item img { width: 18px; }
+
+/* Content Area */
+.explorer-content {
+    flex-grow: 1;
+    padding: 20px;
+    display: grid;
+    /* Responsive Grid */
+    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+    grid-auto-rows: 110px;
+    gap: 10px;
+    overflow-y: auto;
+}
+
+.file-grid-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: default;
+    transition: 0.1s;
+}
+
+.file-grid-item:hover { background: rgba(255,255,255,0.1); }
+.file-grid-item:active { background: rgba(255,255,255,0.2); }
+
+.file-grid-item img {
+    width: 48px;
+    height: 48px;
+    margin-bottom: 5px;
+}
+
+.file-name {
+    color: white;
+    font-size: 12px;
+    text-align: center;
+    word-break: break-word;
+
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+
+    overflow: hidden;
+}
+.file-type { display: none; } /* Hide type mostly, simple view */
+
+.empty-folder {
+    color: #888;
+    font-size: 14px;
+    grid-column: 1 / -1;
+    text-align: center;
+    margin-top: 50px;
+}
+
+/* Mobile Fix */
+@media (max-width: 600px) {
+    .explorer-sidebar { display: none; } /* Mobile pe sidebar hide kardo jagah bachane ke liye */
+    .search-bar input { width: 100px; }
+}

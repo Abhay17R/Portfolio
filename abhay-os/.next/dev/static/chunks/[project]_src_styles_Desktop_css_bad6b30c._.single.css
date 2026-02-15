@@ -15,7 +15,7 @@
   background-color: #000;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 70% 100%;
+  background-size: 90% 100%;
   transition: all .5s;
   position: absolute;
   inset: 0;
@@ -39,14 +39,17 @@
   letter-spacing: 4px;
   filter: drop-shadow(0 0 10px #000c);
   font-family: Segoe UI, sans-serif;
-  font-size: 6rem;
+  font-size: clamp(3rem, 8vw, 6rem);
   font-weight: 800;
 }
 
 .icons-grid {
   z-index: 10;
-  flex-direction: column;
-  gap: 25px;
+  flex-flow: column wrap;
+  align-content: flex-start;
+  gap: 15px;
+  width: auto;
+  height: calc(100vh - 70px);
   display: flex;
   position: absolute;
   top: 20px;
@@ -81,6 +84,15 @@
   text-shadow: 0 1px 3px #000000e6;
   font-size: 13px;
   line-height: 1.2;
+}
+
+@media (max-width: 600px) {
+  .icons-grid {
+    flex-direction: row;
+    width: 100%;
+    height: auto;
+    padding-right: 20px;
+  }
 }
 
 /*# sourceMappingURL=%5Bproject%5D_src_styles_Desktop_css_bad6b30c._.single.css.map*/

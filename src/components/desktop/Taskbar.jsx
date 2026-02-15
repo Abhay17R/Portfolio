@@ -3,21 +3,18 @@ import React, { useState, useEffect } from "react";
 import { useOS } from "@/context/OSContext";
 import "@/styles/Taskbar.css";
 
-// Receive onStartClick prop here
-const Taskbar = ({ onStartClick }) => {
-  const { osMode } = useOS();
+const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick }) => {
+  const { osMode, windows, activeWindowId, focusWindow, toggleMinimize } = useOS();
   const [time, setTime] = useState(new Date());
   const [chaosStyle, setChaosStyle] = useState({});
 
-  // Clock Logic
   useEffect(() => {
-    // Fix hydration mismatch by setting time only on client
     setTime(new Date());
     const timer = setInterval(() => setTime(new Date()), 1000);
     return () => clearInterval(timer);
   }, []);
 
-  // Chaos Mode Logic
+  // Chaos Mode (Tera purana code)
   useEffect(() => {
     if (osMode !== "chaos") {
       setChaosStyle({});
@@ -32,27 +29,55 @@ const Taskbar = ({ onStartClick }) => {
     return () => clearInterval(interval);
   }, [osMode]);
 
+  // --- LOGIC ADDED HERE ---
+  const isAppOpen = (id) => windows.some((w) => w.id === id);
+  
+  const isAppActive = (id) => {
+    const win = windows.find((w) => w.id === id);
+    return activeWindowId === id && win && !win.isMinimized;
+  };
+
+  const handleAppClick = (id, openCallback) => {
+    if (isAppActive(id)) {
+      toggleMinimize(id); // Agar saamne hai to minimize
+    } else if (isAppOpen(id)) {
+      focusWindow(id); // Agar peeche hai to upar lao
+    } else {
+      openCallback && openCallback(); // Agar band hai to kholo
+    }
+  };
+
   return (
     <div className="taskbar" style={chaosStyle} onClick={(e) => e.stopPropagation()}>
       
-      {/* 1. Empty Left Spacer */}
+      {/* Spacer jaisa tune rakha tha */}
       <div style={{ width: '100px' }}></div>
 
-      {/* 2. CENTER ICONS */}
       <div className="taskbar-center">
-        {/* Start Button - Calls onStartClick */}
+        {/* START BUTTON (Wapis Center me) */}
         <div className="tb-icon" title="Start" onClick={onStartClick}>
           <img src="https://img.icons8.com/fluency/48/windows-11.png" alt="Start" />
         </div>
         
-        <div className="tb-icon" title="File Explorer">
+        {/* FILE EXPLORER (Logic Added) */}
+        <div 
+          className={`tb-icon ${isAppOpen("explorer") ? "open" : ""} ${isAppActive("explorer") ? "active" : ""}`} 
+          title="File Explorer" 
+          onClick={() => handleAppClick("explorer", onExplorerClick)}
+        >
           <img src="https://img.icons8.com/fluency/48/folder-invoices--v1.png" alt="Explorer" />
         </div>
         
-        <div className="tb-icon active" title="Google Chrome">
+        {/* CHROME (Logic Added) */}
+        <div 
+          className={`tb-icon ${isAppOpen("chrome") ? "open" : ""} ${isAppActive("chrome") ? "active" : ""}`} 
+          title="Google Chrome" 
+          onClick={() => handleAppClick("chrome", onChromeClick)}
+        >
           <img src="https://img.icons8.com/color/48/chrome--v1.png" alt="Chrome" />
         </div>
         
+        {/* Static Icons (Same as before) */}
         <div className="tb-icon" title="Notepad">
           <img src="https://img.icons8.com/fluency/48/notepad.png" alt="Notepad" />
         </div>
@@ -66,7 +91,6 @@ const Taskbar = ({ onStartClick }) => {
         </div>
       </div>
 
-      {/* 3. RIGHT SYSTEM TRAY */}
       <div className="system-tray">
         <span className="tray-icon">^</span>
         <span className="tray-icon">📶</span>
