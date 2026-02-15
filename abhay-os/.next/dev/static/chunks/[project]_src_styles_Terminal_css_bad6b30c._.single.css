@@ -1,0 +1,131 @@
+/* [project]/src/styles/Terminal.css [app-client] (css) */
+:root {
+  --term-bg: #0d0d0d;
+  --term-text: #0f0;
+  --term-glow: #0f0;
+  --term-error: #f33;
+  --term-warn: #ff3;
+}
+
+.terminal-wrapper {
+  background-color: var(--term-bg);
+  width: 100%;
+  height: 100%;
+  color: var(--term-text);
+  flex-direction: column;
+  padding: 5px;
+  font-family: VT323, monospace;
+  font-size: 1.2rem;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.scanlines {
+  pointer-events: none;
+  z-index: 10;
+  background: linear-gradient(#fff0, #fff0 50%, #0003 50%, #0003) 0 0 / 100% 4px;
+  animation: 10s linear infinite scanline;
+  position: absolute;
+  inset: 0;
+}
+
+.crt-flicker {
+  opacity: 0;
+  z-index: 10;
+  pointer-events: none;
+  background: #1210101a;
+  animation: .15s infinite flicker;
+  position: absolute;
+  inset: 0;
+}
+
+@keyframes scanline {
+  0% {
+    background-position: 0 0;
+  }
+
+  100% {
+    background-position: 0 100%;
+  }
+}
+
+@keyframes flicker {
+  0% {
+    opacity: .02;
+  }
+
+  50% {
+    opacity: .05;
+  }
+
+  100% {
+    opacity: .02;
+  }
+}
+
+.terminal-body {
+  z-index: 5;
+  flex: 1;
+  padding: 15px;
+  position: relative;
+  overflow-y: auto;
+}
+
+.terminal-body::-webkit-scrollbar {
+  width: 8px;
+}
+
+.terminal-body::-webkit-scrollbar-thumb {
+  background: #030;
+  border: 1px solid #0f0;
+}
+
+.terminal-body::-webkit-scrollbar-track {
+  background: #000;
+}
+
+.output-line {
+  text-shadow: 0 0 5px var(--term-glow);
+  margin-bottom: 5px;
+  line-height: 1.3;
+}
+
+.output-line.error {
+  color: var(--term-error);
+  text-shadow: 0 0 5px red;
+}
+
+.output-line.success {
+  color: #8f8;
+}
+
+.output-line.system {
+  color: #0ff;
+}
+
+.input-line {
+  align-items: center;
+  margin-top: 10px;
+  display: flex;
+}
+
+.prompt-label {
+  color: var(--term-warn);
+  margin-right: 10px;
+  font-weight: bold;
+}
+
+.term-input {
+  color: var(--term-text);
+  text-shadow: 0 0 5px var(--term-glow);
+  caret-color: var(--term-text);
+  background: none;
+  border: none;
+  outline: none;
+  flex: 1;
+  font-family: VT323, monospace;
+  font-size: 1.2rem;
+}
+
+/*# sourceMappingURL=%5Bproject%5D_src_styles_Terminal_css_bad6b30c._.single.css.map*/

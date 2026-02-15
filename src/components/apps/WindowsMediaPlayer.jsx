@@ -1,12 +1,19 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { 
   Play, Pause, SkipBack, SkipForward, Volume2, VolumeX, 
-  List, Shuffle, Repeat, Maximize2, FileVideo, Music 
+  List, FileVideo, Music, Loader, Maximize2, Minimize2,
+  Repeat, Shuffle, PictureInPicture, UploadCloud 
 } from 'lucide-react';
 import '@/styles/WindowsMediaPlayer.css';
 
 const WindowsMediaPlayer = () => {
   const mediaRef = useRef(null);
+  const containerRef = useRef(null);
+
+  // --- STATE ---
+  const [playlist, setPlaylist] = useState([]); 
+  const [loading, setLoading] = useState(true);
+  
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentTrack, setCurrentTrack] = useState(0);
   const [progress, setProgress] = useState(0);
@@ -14,50 +21,77 @@ const WindowsMediaPlayer = () => {
   const [isMuted, setIsMuted] = useState(false);
   const [duration, setDuration] = useState(0);
   const [showPlaylist, setShowPlaylist] = useState(true);
+  const [isFullscreen, setIsFullscreen] = useState(false);
 
-  // --- PLAYLIST (MIXED AUDIO & VIDEO) ---
-  // Note: Apne public folder me 'media' folder bana ke files daal dena
-  const playlist = [
-    { 
-      id: 1, 
-      type: 'video',  // <--- TYPE VIDEO
-      title: "Cyberpunk Trailer", 
-      artist: "CD Projekt Red", 
-      url: "/media/video1.mp4", // .mp4 file
-      cover: "https://img.icons8.com/fluency/48/video-file.png" 
-    },
-    { 
-      id: 2, 
-      type: 'audio', // <--- TYPE AUDIO
-      title: "Synthwave Chill", 
-      artist: "Retro Boy", 
-      url: "/media/song1.mp3", // .mp3 file
-      cover: "https://img.icons8.com/color/48/musical-notes.png" 
-    },
-    { 
-      id: 3, 
-      type: 'video', 
-      title: "Hacking Tutorial", 
-      artist: "Mr. Robot", 
-      url: "/media/video2.mp4", 
-      cover: "https://img.icons8.com/fluency/48/console.png" 
-    },
-  ];
+  // New Features State
+  const [isShuffle, setIsShuffle] = useState(false);
+  const [repeatMode, setRepeatMode] = useState(0); // 0: Off, 1: One, 2: All
+  const [isDragging, setIsDragging] = useState(false);
 
-  // --- HANDLERS ---
+  // --- 1. FULLSCREEN LISTENER ---
   useEffect(() => {
-    // Reset state when track changes
-    if(mediaRef.current) {
+    const handleFsChange = () => {
+      setIsFullscreen(!!document.fullscreenElement);
+    };
+    document.addEventListener('fullscreenchange', handleFsChange);
+    return () => document.removeEventListener('fullscreenchange', handleFsChange);
+  }, []);
+
+  // --- 2. AUTO SCANNER ---
+  useEffect(() => {
+    const fetchMedia = async () => {
+      try {
+        const res = await fetch('/api/media');
+        const data = await res.json();
+        setPlaylist(data);
+        setLoading(false);
+      } catch (error) {
+        console.error("Media Scan Failed:", error);
+        setLoading(false);
+      }
+    };
+    fetchMedia();
+  }, []);
+
+  // --- 3. HANDLERS (Functions) ---
+  
+  // Track Update Listener
+  useEffect(() => {
+    if(mediaRef.current && playlist.length > 0) {
       mediaRef.current.load();
       if(isPlaying) mediaRef.current.play();
     }
-  }, [currentTrack]);
+  }, [currentTrack, playlist]);
 
   const togglePlay = () => {
     if (mediaRef.current) {
       if (isPlaying) mediaRef.current.pause();
       else mediaRef.current.play();
       setIsPlaying(!isPlaying);
+    }
+  };
+
+  const handleFullscreen = () => {
+    if (!document.fullscreenElement) {
+      if (containerRef.current.requestFullscreen) {
+        containerRef.current.requestFullscreen();
+      }
+    } else {
+      if (document.exitFullscreen) {
+        document.exitFullscreen();
+      }
+    }
+  };
+
+  const togglePiP = async () => {
+    try {
+      if (document.pictureInPictureElement) {
+        await document.exitPictureInPicture();
+      } else if (mediaRef.current && isVideo) {
+        await mediaRef.current.requestPictureInPicture();
+      }
+    } catch (error) {
+      console.error("PiP failed:", error);
     }
   };
 
@@ -82,11 +116,74 @@ const WindowsMediaPlayer = () => {
   };
 
   const handleNext = () => {
-    changeTrack((currentTrack + 1) % playlist.length);
+    if (repeatMode === 1) {
+      mediaRef.current.currentTime = 0;
+      mediaRef.current.play();
+      return;
+    }
+    if (isShuffle) {
+      const randomIndex = Math.floor(Math.random() * playlist.length);
+      setCurrentTrack(randomIndex);
+    } else {
+      setCurrentTrack((prev) => (prev + 1) % playlist.length);
+    }
+    setIsPlaying(true);
   };
 
   const handlePrev = () => {
     changeTrack((currentTrack - 1 + playlist.length) % playlist.length);
+  };
+
+  // --- 4. KEYBOARD SHORTCUTS (Moved Here - Correct Place) ---
+  useEffect(() => {
+    const handleKeyDown = (e) => {
+      if (e.target.tagName === 'INPUT') return;
+      
+      switch(e.code) {
+        case 'Space':
+          e.preventDefault();
+          togglePlay();
+          break;
+        case 'ArrowRight':
+          if (mediaRef.current) mediaRef.current.currentTime += 5;
+          break;
+        case 'ArrowLeft':
+          if (mediaRef.current) mediaRef.current.currentTime -= 5;
+          break;
+        case 'KeyM':
+          setIsMuted(prev => !prev);
+          break;
+        case 'KeyF':
+          handleFullscreen();
+          break;
+      }
+    };
+    window.addEventListener('keydown', handleKeyDown);
+    return () => window.removeEventListener('keydown', handleKeyDown);
+  }, [isPlaying, isMuted]); // Now this works because functions are defined above
+
+  // --- DRAG & DROP HANDLERS ---
+  const handleDragOver = (e) => { e.preventDefault(); setIsDragging(true); };
+  const handleDragLeave = () => setIsDragging(false);
+  
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    
+    const file = e.dataTransfer.files[0];
+    if (file && (file.type.startsWith('audio') || file.type.startsWith('video'))) {
+      const url = URL.createObjectURL(file);
+      const newTrack = {
+        title: file.name,
+        artist: "Local File",
+        url: url,
+        type: file.type.startsWith('video') ? 'video' : 'audio',
+        cover: "https://img.icons8.com/fluency/48/opened-folder.png"
+      };
+      setPlaylist([newTrack, ...playlist]);
+      setCurrentTrack(0);
+      setIsPlaying(true);
+    }
   };
 
   const formatTime = (seconds) => {
@@ -96,71 +193,84 @@ const WindowsMediaPlayer = () => {
     return `${min}:${sec < 10 ? '0' : ''}${sec}`;
   };
 
-  // Helper to check current type
-  const isVideo = playlist[currentTrack].type === 'video';
+  // Render Helpers
+  if (loading) return (
+    <div className="wmp-container" style={{display:'flex', alignItems:'center', justifyContent:'center'}}>
+      <div style={{textAlign:'center', color:'#00f3ff'}}>
+        <Loader className="animate-spin" size={30} style={{marginBottom:10}} />
+        <p>SCANNING_MEDIA_DRIVE...</p>
+      </div>
+    </div>
+  );
+
+  if (playlist.length === 0) return (
+    <div className="wmp-container" style={{display:'flex', alignItems:'center', justifyContent:'center', color:'white'}}>
+      <p>[!] NO MEDIA FOUND IN /public/media</p>
+    </div>
+  );
+
+  const currentItem = playlist[currentTrack];
+  const isVideo = currentItem?.type === 'video';
 
   return (
-    <div className="wmp-container">
+    <div 
+      className={`wmp-container ${isFullscreen ? 'is-fs' : ''}`} 
+      ref={containerRef}
+      onDragOver={handleDragOver} 
+      onDragLeave={handleDragLeave} 
+      onDrop={handleDrop}
+    >
+      {/* Drag Overlay */}
+      {isDragging && (
+        <div className="drag-overlay">
+          <UploadCloud size={50} color="#00f3ff"/>
+          <h2>DROP FILE TO PLAY</h2>
+        </div>
+      )}
       
-      {/* --- MAIN DISPLAY AREA --- */}
+      {/* Display Area */}
       <div className="wmp-display-area">
-        
-        {/* 1. ACTUAL MEDIA PLAYER ELEMENT */}
-        {/* Ye hamesha rahega, bas CSS se hum ise hide/show karenge based on type */}
         <video 
           ref={mediaRef}
-          src={playlist[currentTrack].url}
+          src={currentItem.url}
           className={`wmp-video-element ${isVideo ? 'visible' : 'hidden'}`}
           onClick={togglePlay}
+          onDoubleClick={handleFullscreen}
           onTimeUpdate={handleTimeUpdate}
           onEnded={handleNext}
         />
 
-        {/* 2. AUDIO VISUALIZER OVERLAY (Sirf tab dikhega jab Audio ho) */}
         {!isVideo && (
           <div className="wmp-visualizer-overlay">
              <div className="wmp-grid-bg"></div>
-             
-             {/* Spinning Album Art */}
              <div className="wmp-track-info">
-               <img 
-                 src={playlist[currentTrack].cover} 
-                 alt="Cover" 
-                 className={`album-art ${isPlaying ? 'spinning' : ''}`} 
-               />
+               <img src={currentItem.cover} alt="Cover" className={`album-art ${isPlaying ? 'spinning' : ''}`} />
                <div className="track-details">
-                 <h2>{playlist[currentTrack].title}</h2>
-                 <p>{playlist[currentTrack].artist}</p>
+                 <h2>{currentItem.title}</h2>
+                 <p>{currentItem.artist}</p>
                </div>
              </div>
-
-             {/* Animated Bars */}
              <div className="wmp-bars">
                {[...Array(20)].map((_, i) => (
-                 <div 
-                   key={i} 
-                   className={`bar ${isPlaying ? 'animate' : ''}`} 
-                   style={{ animationDelay: `${i * 0.1}s`, height: isPlaying ? '50%' : '10%' }}
-                 ></div>
+                 <div key={i} className={`bar ${isPlaying ? 'animate' : ''}`} style={{ animationDelay: `${i * 0.1}s`, height: isPlaying ? '50%' : '10%' }}></div>
                ))}
              </div>
           </div>
         )}
-
-        {/* 3. VIDEO OVERLAY (Scanlines - Sirf video pe dikhega) */}
+        
         {isVideo && <div className="video-scanlines"></div>}
       </div>
 
-      {/* --- PLAYLIST --- */}
+      {/* Playlist */}
       <div className={`wmp-playlist ${showPlaylist ? 'open' : ''}`}>
         <div className="playlist-header">
-           <span>MEDIA_QUEUE</span>
+           <span>LOCAL_DRIVE_SCAN_RESULTS</span>
            <button onClick={() => setShowPlaylist(!showPlaylist)}><List size={16}/></button>
         </div>
         <ul>
           {playlist.map((track, index) => (
             <li 
-              key={track.id} 
+              key={index} 
               className={currentTrack === index ? 'active' : ''}
               onClick={() => changeTrack(index)}
             >
@@ -168,24 +278,16 @@ const WindowsMediaPlayer = () => {
                 {track.type === 'video' ? <FileVideo size={14}/> : <Music size={14}/>}
               </span>
               <span className="track-name">{track.title}</span>
-              <span className="track-time">
-                {currentTrack === index && isPlaying ? "PLAYING..." : ""}
-              </span>
             </li>
           ))}
         </ul>
       </div>
 
-      {/* --- CONTROLS --- */}
+      {/* Controls */}
       <div className="wmp-controls">
         <div className="wmp-progress-wrapper">
           <span className="time-text">{formatTime(mediaRef.current?.currentTime)}</span>
-          <input 
-            type="range" 
-            className="wmp-slider progress" 
-            value={progress || 0} 
-            onChange={handleSeek} 
-          />
+          <input type="range" className="wmp-slider progress" value={progress || 0} onChange={handleSeek} />
           <span className="time-text">{formatTime(duration)}</span>
         </div>
 
@@ -195,37 +297,51 @@ const WindowsMediaPlayer = () => {
            </div>
 
            <div className="main-actions">
-              <button className="ctrl-btn" onClick={handlePrev}><SkipBack size={24}/></button>
-              <button className="play-btn" onClick={togglePlay}>
-                 {isPlaying ? <Pause size={30} fill="black"/> : <Play size={30} fill="black" style={{marginLeft:4}}/>}
-              </button>
-              <button className="ctrl-btn" onClick={handleNext}><SkipForward size={24}/></button>
+               {/* Shuffle */}
+               <button className={`icon-btn ${isShuffle ? 'active' : ''}`} onClick={() => setIsShuffle(!isShuffle)}>
+                 <Shuffle size={18}/>
+               </button>
+
+               <button className="ctrl-btn" onClick={handlePrev}><SkipBack size={24}/></button>
+               <button className="play-btn" onClick={togglePlay}>
+                  {isPlaying ? <Pause size={24} fill="#000"/> : <Play size={24} fill="#000"/>}
+               </button>
+               <button className="ctrl-btn" onClick={handleNext}><SkipForward size={24}/></button>
+
+               {/* Repeat */}
+               <button 
+                 className={`icon-btn ${repeatMode > 0 ? 'active' : ''}`} 
+                 onClick={() => setRepeatMode((prev) => (prev + 1) % 3)}
+                 title={repeatMode === 1 ? "Repeat One" : repeatMode === 2 ? "Repeat All" : "Repeat Off"}
+               >
+                 <Repeat size={18}/>
+                 {repeatMode === 1 && <span className="tiny-badge">1</span>}
+               </button>
            </div>
 
            <div className="vol-actions">
-              <button className="icon-btn" onClick={() => {
-                  mediaRef.current.muted = !isMuted;
-                  setIsMuted(!isMuted);
-              }}>
+              {/* Volume */}
+              <button className="icon-btn" onClick={() => { mediaRef.current.muted = !isMuted; setIsMuted(!isMuted); }}>
                  {isMuted ? <VolumeX size={18}/> : <Volume2 size={18}/>}
               </button>
-              <input 
-                type="range" 
-                className="wmp-slider volume" 
-                min="0" max="1" step="0.1"
-                value={isMuted ? 0 : volume}
-                onChange={(e) => {
-                    setVolume(e.target.value); 
-                    if(mediaRef.current) mediaRef.current.volume = e.target.value;
-                }} 
-              />
-              <button className="icon-btn" onClick={() => setShowPlaylist(!showPlaylist)}>
-                 <List size={18} color={showPlaylist ? '#00f3ff' : 'white'}/>
+              <input type="range" className="wmp-slider volume" min="0" max="1" step="0.1" value={isMuted ? 0 : volume} onChange={(e) => { setVolume(e.target.value); if(mediaRef.current) mediaRef.current.volume = e.target.value; }} />
+              
+              {/* PiP (Video Only) */}
+              {isVideo && (
+                <button className="icon-btn" onClick={togglePiP} title="Picture in Picture">
+                  <PictureInPicture size={18}/>
+                </button>
+              )}
+
+              <button className="icon-btn" onClick={() => setShowPlaylist(!showPlaylist)}><List size={18}/></button>
+              
+              {/* Fullscreen */}
+              <button className="icon-btn" onClick={handleFullscreen} title="Fullscreen">
+                {isFullscreen ? <Minimize2 size={18}/> : <Maximize2 size={18}/>}
               </button>
            </div>
         </div>
       </div>
-
     </div>
   );
 };

@@ -1,0 +1,338 @@
+/* [project]/src/styles/WindowsMediaPlayer.css [app-client] (css) */
+.wmp-container {
+  color: #fff;
+  background: #111;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-family: Segoe UI, sans-serif;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.wmp-visualizer-area {
+  background: radial-gradient(circle, #222, #000);
+  flex-direction: column;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.wmp-grid-bg {
+  opacity: .3;
+  background-image: linear-gradient(#00f3ff1a 1px, #0000 1px), linear-gradient(90deg, #00f3ff1a 1px, #0000 1px);
+  background-size: 30px 30px;
+  position: absolute;
+  inset: 0;
+}
+
+.wmp-track-info {
+  z-index: 2;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.album-art {
+  border: 4px solid #333;
+  border-radius: 50%;
+  width: 120px;
+  height: 120px;
+  margin-bottom: 10px;
+  transition: transform .5s;
+  box-shadow: 0 0 20px #00f3ff4d;
+}
+
+.album-art.spinning {
+  border-color: #00f3ff;
+  animation: 5s linear infinite spin;
+}
+
+@keyframes spin {
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.track-details h2 {
+  color: #fff;
+  text-shadow: 0 0 5px #00f3ff;
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+.track-details p {
+  color: #aaa;
+  margin: 5px 0 0;
+  font-size: .9rem;
+}
+
+.wmp-bars {
+  z-index: 2;
+  align-items: flex-end;
+  gap: 4px;
+  height: 60px;
+  margin-bottom: 20px;
+  display: flex;
+}
+
+.bar {
+  background: #00f3ff;
+  border-radius: 2px;
+  width: 8px;
+  transition: height .1s;
+  box-shadow: 0 0 10px #00f3ff;
+}
+
+.bar.animate {
+  animation: 1s ease-in-out infinite bounce;
+}
+
+@keyframes bounce {
+  0%, 100% {
+    background: #00f3ff;
+    height: 10%;
+  }
+
+  50% {
+    background: #f0f;
+    height: 80%;
+    box-shadow: 0 0 15px #f0f;
+  }
+}
+
+.wmp-playlist {
+  background: #1a1a1a;
+  border-top: 1px solid #333;
+  height: 0;
+  transition: height .3s;
+  overflow-y: auto;
+}
+
+.wmp-playlist.open {
+  height: 150px;
+}
+
+.playlist-header {
+  color: #888;
+  background: #252525;
+  justify-content: space-between;
+  padding: 8px 15px;
+  font-size: .8rem;
+  font-weight: bold;
+  display: flex;
+}
+
+.wmp-playlist ul {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.wmp-playlist li {
+  cursor: pointer;
+  border-bottom: 1px solid #222;
+  align-items: center;
+  padding: 8px 15px;
+  font-size: .9rem;
+  display: flex;
+}
+
+.wmp-playlist li:hover {
+  background: #333;
+}
+
+.wmp-playlist li.active {
+  color: #00f3ff;
+  background: #00f3ff1a;
+  border-left: 3px solid #00f3ff;
+}
+
+.track-num {
+  color: #555;
+  width: 25px;
+}
+
+.track-name {
+  flex: 1;
+}
+
+.track-time {
+  color: #555;
+  font-size: .8rem;
+}
+
+.wmp-controls {
+  -webkit-backdrop-filter: blur(10px);
+  backdrop-filter: blur(10px);
+  background: #1e1e1ee6;
+  border-top: 1px solid #333;
+  padding: 15px;
+}
+
+.wmp-progress-wrapper {
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 10px;
+  display: flex;
+}
+
+.time-text {
+  color: #aaa;
+  text-align: center;
+  width: 35px;
+  font-size: .75rem;
+}
+
+.wmp-slider {
+  -webkit-appearance: none;
+  background: #444;
+  border-radius: 2px;
+  outline: none;
+  flex: 1;
+  height: 4px;
+}
+
+.wmp-slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  cursor: pointer;
+  background: #00f3ff;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  box-shadow: 0 0 10px #00f3ff;
+}
+
+.wmp-slider.volume {
+  flex: none;
+  width: 80px;
+}
+
+.wmp-buttons-row {
+  justify-content: space-between;
+  align-items: center;
+  display: flex;
+}
+
+.left-actions, .vol-actions {
+  align-items: center;
+  gap: 10px;
+  width: 120px;
+  display: flex;
+}
+
+.vol-actions {
+  justify-content: flex-end;
+}
+
+.main-actions {
+  align-items: center;
+  gap: 20px;
+  display: flex;
+}
+
+.icon-btn {
+  color: #aaa;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.icon-btn:hover {
+  color: #fff;
+}
+
+.ctrl-btn {
+  color: #fff;
+  cursor: pointer;
+  background: none;
+  border: none;
+}
+
+.ctrl-btn:hover {
+  color: #00f3ff;
+  transform: scale(1.1);
+}
+
+.play-btn {
+  cursor: pointer;
+  background: #00f3ff;
+  border: none;
+  border-radius: 50%;
+  justify-content: center;
+  align-items: center;
+  width: 50px;
+  height: 50px;
+  transition: transform .2s;
+  display: flex;
+  box-shadow: 0 0 20px #00f3ff66;
+}
+
+.play-btn:hover {
+  transform: scale(1.1);
+  box-shadow: 0 0 30px #00f3ff99;
+}
+
+.play-btn:active {
+  transform: scale(.95);
+}
+
+.wmp-display-area {
+  background: #000;
+  flex: 1;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.wmp-video-element {
+  object-fit: contain;
+  width: 100%;
+  height: 100%;
+}
+
+.wmp-video-element.hidden {
+  display: none;
+}
+
+.wmp-visualizer-overlay {
+  z-index: 10;
+  background: radial-gradient(circle, #222, #000);
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: absolute;
+  inset: 0;
+}
+
+.video-scanlines {
+  pointer-events: none;
+  z-index: 5;
+  background: linear-gradient(#12101000 50%, #00000040 50%) 0 0 / 100% 2px, linear-gradient(90deg, #ff00000f, #00ff0005, #0000ff0f) 0 0 / 3px 100%;
+  position: absolute;
+  inset: 0;
+}
+
+.track-icon {
+  color: #00f3ff;
+  alignItems: center;
+  margin-right: 10px;
+  display: flex;
+}
+
+.media-type-badge {
+  color: #00f3ff;
+  background: #ffffff1a;
+  border: 1px solid #00f3ff4d;
+  border-radius: 4px;
+  padding: 2px 6px;
+  font-size: .7rem;
+}
+
+/*# sourceMappingURL=%5Bproject%5D_src_styles_WindowsMediaPlayer_css_bad6b30c._.single.css.map*/
