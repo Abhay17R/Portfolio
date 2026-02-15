@@ -1,0 +1,152 @@
+/* src/styles/Calculator.css */
+:root {
+  --calc-bg: #202020;
+  --calc-btn-bg: #323232;
+  --calc-btn-hover: #3b3b3b;
+  --calc-accent: #76b9ed; /* Windows 11 Blue-ish */
+  --neon-glow: #00f3ff;   /* Hacker Blue */
+  --text-white: #ffffff;
+}
+
+.calc-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: rgba(32, 32, 32, 0.95);
+  backdrop-filter: blur(20px);
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+  user-select: none;
+}
+
+/* --- HEADER (Menu & Mode Name) --- */
+.calc-header {
+  display: flex;
+  align-items: center;
+  padding: 10px 15px;
+  gap: 15px;
+  height: 50px;
+}
+
+.menu-btn {
+  background: none;
+  border: none;
+  color: white;
+  font-size: 1.2rem;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+}
+.menu-btn:hover { background: rgba(255,255,255,0.1); }
+
+.mode-title {
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+/* --- MENU DROPDOWN (Sidebar) --- */
+.mode-menu {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  background: #2d2d2d;
+  width: 200px;
+  height: calc(100% - 50px);
+  z-index: 100;
+  box-shadow: 4px 0 15px rgba(0,0,0,0.5);
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.menu-item {
+  background: transparent;
+  border: none;
+  color: white;
+  text-align: left;
+  padding: 10px 15px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: 0.2s;
+}
+
+.menu-item:hover { background: rgba(255,255,255,0.1); }
+.menu-item.active { background: var(--calc-accent); color: black; font-weight: bold; }
+
+/* --- DISPLAY AREA --- */
+.calc-display {
+  flex: 1; /* Takes available space */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 0 20px 20px 20px;
+  text-align: right;
+}
+
+.history-text {
+  color: #aaa;
+  font-size: 1rem;
+  min-height: 20px;
+  margin-bottom: 5px;
+}
+
+.current-text {
+  font-size: 3rem;
+  font-weight: 600;
+  word-break: break-all;
+}
+
+/* --- KEYPAD GRID --- */
+.calc-keypad {
+  display: grid;
+  gap: 2px;
+  padding: 2px;
+}
+
+/* Standard Mode: 4 Columns */
+.calc-keypad.standard {
+  grid-template-columns: repeat(4, 1fr);
+  height: 65%; /* Keypad height */
+}
+
+/* Scientific Mode: 5 Columns */
+.calc-keypad.scientific {
+  grid-template-columns: repeat(5, 1fr);
+  height: 70%;
+}
+
+.c-btn {
+  background: var(--calc-btn-bg);
+  border: 1px solid rgba(0,0,0,0.2);
+  border-radius: 4px;
+  color: white;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.1s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.c-btn:hover { background: var(--calc-btn-hover); border-color: rgba(255,255,255,0.1); }
+.c-btn:active { transform: scale(0.98); }
+
+/* Colors for specific buttons */
+.btn-num { background: #3b3b3b; font-weight: bold; font-size: 1.2rem; }
+.btn-num:hover { background: #454545; }
+
+.btn-equal {
+  background: var(--calc-accent);
+  color: #000;
+  font-weight: bold;
+}
+.btn-equal:hover { background: var(--neon-glow); box-shadow: 0 0 15px var(--neon-glow); }
+
+.btn-op { background: #282828; color: var(--neon-glow); font-size: 1.3rem; }
+
+/* Scientific Buttons (Trig/Func) */
+.btn-sci { font-size: 0.9rem; color: #ff00ff; /* Neon Pink */ }

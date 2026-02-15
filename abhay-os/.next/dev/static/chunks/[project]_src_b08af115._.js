@@ -1646,12 +1646,17 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
         return activeWindowId === id && win && !win.isMinimized;
     };
     const handleAppClick = (id, openCallback)=>{
-        if (isAppActive(id)) {
-            toggleMinimize(id); // Agar saamne hai to minimize
-        } else if (isAppOpen(id)) {
-            focusWindow(id); // Agar peeche hai to upar lao
+        const win = windows.find((w)=>w.id === id);
+        // Case 1: App Active hai aur Screen pe hai -> Minimize karo
+        if (activeWindowId === id && !win?.isMinimized) {
+            toggleMinimize(id);
+        } else if (win) {
+            if (win.isMinimized) {
+                toggleMinimize(id); // <--- YE MISSING THA: Minimized hai to wapas Toggle karo (Un-minimize)
+            }
+            focusWindow(id); // Aur sabse upar (Z-index) lao
         } else {
-            openCallback && openCallback(); // Agar band hai to kholo
+            openCallback && openCallback();
         }
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1665,7 +1670,7 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                 }
             }, void 0, false, {
                 fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                lineNumber: 54,
+                lineNumber: 64,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1680,12 +1685,12 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                             alt: "Start"
                         }, void 0, false, {
                             fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                            lineNumber: 59,
+                            lineNumber: 69,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 58,
+                        lineNumber: 68,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1697,12 +1702,12 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                             alt: "Explorer"
                         }, void 0, false, {
                             fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                            lineNumber: 68,
+                            lineNumber: 78,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 63,
+                        lineNumber: 73,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1714,12 +1719,12 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                             alt: "Chrome"
                         }, void 0, false, {
                             fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                            lineNumber: 77,
+                            lineNumber: 87,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 72,
+                        lineNumber: 82,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1730,12 +1735,12 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                             alt: "Notepad"
                         }, void 0, false, {
                             fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                            lineNumber: 82,
+                            lineNumber: 92,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 81,
+                        lineNumber: 91,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1746,12 +1751,12 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                             alt: "Terminal"
                         }, void 0, false, {
                             fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                            lineNumber: 86,
+                            lineNumber: 96,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 85,
+                        lineNumber: 95,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1762,18 +1767,18 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                             alt: "Mail"
                         }, void 0, false, {
                             fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                            lineNumber: 90,
+                            lineNumber: 100,
                             columnNumber: 11
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 89,
+                        lineNumber: 99,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                lineNumber: 56,
+                lineNumber: 66,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1784,7 +1789,7 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                         children: "^"
                     }, void 0, false, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 95,
+                        lineNumber: 105,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1792,7 +1797,7 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                         children: "📶"
                     }, void 0, false, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 96,
+                        lineNumber: 106,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1800,7 +1805,7 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                         children: "🔊"
                     }, void 0, false, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 97,
+                        lineNumber: 107,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -1813,20 +1818,20 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                                 })
                             }, void 0, false, {
                                 fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                                lineNumber: 100,
+                                lineNumber: 110,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 children: time.toLocaleDateString()
                             }, void 0, false, {
                                 fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                                lineNumber: 101,
+                                lineNumber: 111,
                                 columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 99,
+                        lineNumber: 109,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
@@ -1837,19 +1842,19 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick })=>{
                         children: "🔔"
                     }, void 0, false, {
                         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                        lineNumber: 104,
+                        lineNumber: 114,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/desktop/Taskbar.jsx",
-                lineNumber: 94,
+                lineNumber: 104,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/desktop/Taskbar.jsx",
-        lineNumber: 51,
+        lineNumber: 61,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -2212,14 +2217,37 @@ const WindowFrame = ({ windowData })=>{
             y: e.clientY - position.y
         });
     };
+    // --- DRAGGING LOGIC ---
+    // ... handleMouseDown same rahega ...
+    // --- DRAGGING LOGIC ---
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "WindowFrame.useEffect": ()=>{
             const handleMouseMove = {
                 "WindowFrame.useEffect.handleMouseMove": (e)=>{
                     if (isDragging) {
+                        let newX = e.clientX - dragOffset.x;
+                        let newY = e.clientY - dragOffset.y;
+                        const screenWidth = window.innerWidth;
+                        const screenHeight = window.innerHeight;
+                        // Safety Buffer: Kam se kam itna pixel header dikhna chahiye
+                        const headerSafety = 70;
+                        // 1. Horizontal (Left/Right)
+                        // Window ko left/right mein aadha bahar jaane do, par pura nahi (mouse cursor logic)
+                        // Ye ensure karega ki aap window ko side se pakad ke wapas la sako
+                        if (newX + size.width < headerSafety) newX = -size.width + headerSafety; // Left limit
+                        if (newX > screenWidth - headerSafety) newX = screenWidth - headerSafety; // Right limit
+                        // 2. Vertical (Top/Bottom) - YE AAPKA MAIN FIX HAI
+                        // TOP: Upar se bahar na jaye (Title bar upar chipak jaye)
+                        if (newY < 0) newY = 0;
+                        // BOTTOM: Window neeche ja sakti hai, lekin HEADER ka top hissa
+                        // screen ke bilkul end tak hi ja sakta hai minus 40px.
+                        // Isse content chup jayega par Title bar dikhega.
+                        if (newY > screenHeight - headerSafety) {
+                            newY = screenHeight - headerSafety;
+                        }
                         setPosition({
-                            x: e.clientX - dragOffset.x,
-                            y: e.clientY - dragOffset.y
+                            x: newX,
+                            y: newY
                         });
                     }
                 }
@@ -2240,7 +2268,8 @@ const WindowFrame = ({ windowData })=>{
         }
     }["WindowFrame.useEffect"], [
         isDragging,
-        dragOffset
+        dragOffset,
+        size
     ]);
     // --- RESIZING LOGIC (Native implementation) ---
     const handleResizeMouseDown = (e, direction)=>{
@@ -2330,20 +2359,20 @@ const WindowFrame = ({ windowData })=>{
                                 width: 18
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                                lineNumber: 131,
+                                lineNumber: 163,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 children: title
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                                lineNumber: 132,
+                                lineNumber: 164,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                        lineNumber: 130,
+                        lineNumber: 162,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2358,12 +2387,12 @@ const WindowFrame = ({ windowData })=>{
                                     size: 14
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                                    lineNumber: 136,
+                                    lineNumber: 168,
                                     columnNumber: 5
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                                lineNumber: 135,
+                                lineNumber: 167,
                                 columnNumber: 3
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2375,18 +2404,18 @@ const WindowFrame = ({ windowData })=>{
                                     size: 12
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                                    lineNumber: 140,
+                                    lineNumber: 172,
                                     columnNumber: 20
                                 }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Square, {
                                     size: 12
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                                    lineNumber: 140,
+                                    lineNumber: 172,
                                     columnNumber: 40
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                                lineNumber: 139,
+                                lineNumber: 171,
                                 columnNumber: 3
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
@@ -2399,24 +2428,24 @@ const WindowFrame = ({ windowData })=>{
                                     size: 16
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                                    lineNumber: 144,
+                                    lineNumber: 176,
                                     columnNumber: 5
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                                lineNumber: 143,
+                                lineNumber: 175,
                                 columnNumber: 3
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                        lineNumber: 134,
+                        lineNumber: 166,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                lineNumber: 125,
+                lineNumber: 157,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2424,7 +2453,7 @@ const WindowFrame = ({ windowData })=>{
                 children: component
             }, void 0, false, {
                 fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                lineNumber: 150,
+                lineNumber: 182,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             !isMaximized && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(__TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["Fragment"], {
@@ -2434,7 +2463,7 @@ const WindowFrame = ({ windowData })=>{
                         onMouseDown: (e)=>handleResizeMouseDown(e, "right")
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                        lineNumber: 157,
+                        lineNumber: 189,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2442,7 +2471,7 @@ const WindowFrame = ({ windowData })=>{
                         onMouseDown: (e)=>handleResizeMouseDown(e, "bottom")
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                        lineNumber: 158,
+                        lineNumber: 190,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2450,7 +2479,7 @@ const WindowFrame = ({ windowData })=>{
                         onMouseDown: (e)=>handleResizeMouseDown(e, "bottom-right")
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                        lineNumber: 159,
+                        lineNumber: 191,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2458,7 +2487,7 @@ const WindowFrame = ({ windowData })=>{
                         onMouseDown: (e)=>handleResizeMouseDown(e, "left")
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                        lineNumber: 160,
+                        lineNumber: 192,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2466,7 +2495,7 @@ const WindowFrame = ({ windowData })=>{
                         onMouseDown: (e)=>handleResizeMouseDown(e, "top")
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                        lineNumber: 161,
+                        lineNumber: 193,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2474,7 +2503,7 @@ const WindowFrame = ({ windowData })=>{
                         onMouseDown: (e)=>handleResizeMouseDown(e, "bottom-left")
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                        lineNumber: 163,
+                        lineNumber: 195,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2482,7 +2511,7 @@ const WindowFrame = ({ windowData })=>{
                         onMouseDown: (e)=>handleResizeMouseDown(e, "top-right")
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                        lineNumber: 164,
+                        lineNumber: 196,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2490,7 +2519,7 @@ const WindowFrame = ({ windowData })=>{
                         onMouseDown: (e)=>handleResizeMouseDown(e, "top-left")
                     }, void 0, false, {
                         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-                        lineNumber: 165,
+                        lineNumber: 197,
                         columnNumber: 13
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
@@ -2498,7 +2527,7 @@ const WindowFrame = ({ windowData })=>{
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/ui/windows/WindowFrame.jsx",
-        lineNumber: 118,
+        lineNumber: 150,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
@@ -2524,290 +2553,541 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/abhay-os/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/abhay-os/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+(()=>{
+    const e = new Error("Cannot find module 'lucide-react'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
-const FileExplorer = ({ isOpen, onClose })=>{
+;
+const FileExplorer = ()=>{
     _s();
-    if (!isOpen) return null;
+    // --- STATE ---
     const [currentPath, setCurrentPath] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("Quick Access");
-    // Mock Data: Folders ke andar kya dikhega
+    const [history, setHistory] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([
+        "Quick Access"
+    ]);
+    const [historyIndex, setHistoryIndex] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(0);
+    const [searchQuery, setSearchQuery] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
+    const [selectedItem, setSelectedItem] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(null);
+    // --- DATA: Windows 11 Style Icons ---
+    const icons = {
+        folder: "https://img.icons8.com/fluency/96/folder-invoices--v1.png",
+        folder_empty: "https://img.icons8.com/fluency/96/folder-invoices--v1.png",
+        disk: "https://img.icons8.com/fluency/96/ssd.png",
+        txt: "https://img.icons8.com/fluency/96/txt.png",
+        pdf: "https://img.icons8.com/fluency/96/pdf.png",
+        img: "https://img.icons8.com/fluency/96/image.png",
+        code: "https://img.icons8.com/fluency/96/code-file.png",
+        exe: "https://img.icons8.com/fluency/96/console.png"
+    };
     const fileSystem = {
         "Quick Access": [
             {
+                id: 1,
                 name: "Desktop",
                 type: "folder",
-                icon: "https://img.icons8.com/fluency/48/desktop-mac.png"
+                icon: "https://img.icons8.com/fluency/96/desktop-mac.png"
             },
             {
+                id: 2,
                 name: "Downloads",
                 type: "folder",
-                icon: "https://img.icons8.com/fluency/48/downloads-folder.png"
+                icon: "https://img.icons8.com/fluency/96/downloads-folder.png"
             },
             {
+                id: 3,
                 name: "Documents",
                 type: "folder",
-                icon: "https://img.icons8.com/fluency/48/documents.png"
+                icon: "https://img.icons8.com/fluency/96/documents.png"
             },
             {
+                id: 4,
                 name: "Pictures",
                 type: "folder",
-                icon: "https://img.icons8.com/fluency/48/image-file.png"
+                icon: "https://img.icons8.com/fluency/96/image-folder.png"
+            },
+            {
+                id: 5,
+                name: "This PC",
+                type: "folder",
+                icon: "https://img.icons8.com/fluency/96/monitor--v1.png"
             }
         ],
         "Desktop": [
             {
+                id: 11,
                 name: "Project Alpha",
                 type: "folder",
-                icon: "https://img.icons8.com/fluency/48/folder-invoices--v1.png"
+                icon: icons.folder
             },
             {
+                id: 12,
+                name: "Portfolio Website",
+                type: "folder",
+                icon: icons.code
+            },
+            {
+                id: 13,
                 name: "Resume.pdf",
                 type: "file",
-                icon: "https://img.icons8.com/color/48/pdf-2--v1.png"
+                icon: icons.pdf,
+                size: "1.2 MB"
             },
             {
-                name: "Website.lnk",
+                id: 14,
+                name: "Chrome.lnk",
                 type: "file",
-                icon: "https://img.icons8.com/color/48/chrome--v1.png"
+                icon: "https://img.icons8.com/fluency/96/chrome.png",
+                size: "2 KB"
             }
         ],
         "Downloads": [
             {
-                name: "installer_v2.exe",
+                id: 21,
+                name: "vsc_setup.exe",
                 type: "file",
-                icon: "https://img.icons8.com/color/48/exe.png"
+                icon: icons.exe,
+                size: "85 MB"
             },
             {
-                name: "meme.jpg",
+                id: 22,
+                name: "funny_cat.png",
                 type: "file",
-                icon: "https://img.icons8.com/fluency/48/image.png"
+                icon: icons.img,
+                size: "2.4 MB"
+            },
+            {
+                id: 23,
+                name: "notes.txt",
+                type: "file",
+                icon: icons.txt,
+                size: "12 KB"
             }
         ],
         "Documents": [
             {
-                name: "Notes.txt",
-                type: "file",
-                icon: "https://img.icons8.com/color/48/txt.png"
+                id: 31,
+                name: "Work Stuff",
+                type: "folder",
+                icon: icons.folder
             },
             {
-                name: "Budget.xlsx",
+                id: 32,
+                name: "Salary_Slip.pdf",
                 type: "file",
-                icon: "https://img.icons8.com/color/48/microsoft-excel-2019.png"
-            }
-        ],
-        "Pictures": [
-            {
-                name: "Holiday.png",
-                type: "file",
-                icon: "https://img.icons8.com/fluency/48/image.png"
+                icon: icons.pdf,
+                size: "400 KB"
             }
         ],
         "This PC": [
             {
-                name: "Local Disk (C:)",
-                type: "drive",
-                icon: "https://img.icons8.com/color/48/c-drive.png"
+                id: 91,
+                name: "Windows (C:)",
+                type: "disk",
+                icon: icons.disk,
+                size: "120 GB free"
             },
             {
-                name: "Local Disk (D:)",
-                type: "drive",
-                icon: "https://img.icons8.com/color/48/hdd.png"
+                id: 92,
+                name: "Data (D:)",
+                type: "disk",
+                icon: icons.disk,
+                size: "500 GB free"
             }
-        ]
+        ],
+        // Empty folders handling
+        "Project Alpha": [],
+        "Portfolio Website": [],
+        "Work Stuff": []
     };
-    // Sidebar Links
     const sidebarItems = [
         {
             name: "Quick Access",
-            icon: "https://img.icons8.com/fluency/48/star.png"
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Star, {
+                size: 16,
+                color: "#eab308",
+                fill: "#eab308"
+            }, void 0, false, {
+                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                lineNumber: 64,
+                columnNumber: 35
+            }, ("TURBOPACK compile-time value", void 0))
         },
         {
             name: "Desktop",
-            icon: "https://img.icons8.com/fluency/48/desktop-mac.png"
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Monitor, {
+                size: 16,
+                color: "#3b82f6"
+            }, void 0, false, {
+                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                lineNumber: 65,
+                columnNumber: 30
+            }, ("TURBOPACK compile-time value", void 0))
         },
         {
             name: "Downloads",
-            icon: "https://img.icons8.com/fluency/48/downloads-folder.png"
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Download, {
+                size: 16,
+                color: "#22c55e"
+            }, void 0, false, {
+                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                lineNumber: 66,
+                columnNumber: 32
+            }, ("TURBOPACK compile-time value", void 0))
         },
         {
             name: "Documents",
-            icon: "https://img.icons8.com/fluency/48/documents.png"
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FileText, {
+                size: 16,
+                color: "#a855f7"
+            }, void 0, false, {
+                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                lineNumber: 67,
+                columnNumber: 32
+            }, ("TURBOPACK compile-time value", void 0))
         },
         {
             name: "Pictures",
-            icon: "https://img.icons8.com/fluency/48/image-file.png"
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Image, {
+                size: 16,
+                color: "#ef4444"
+            }, void 0, false, {
+                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                lineNumber: 68,
+                columnNumber: 31
+            }, ("TURBOPACK compile-time value", void 0))
         },
         {
             name: "This PC",
-            icon: "https://img.icons8.com/fluency/48/monitor--v1.png"
+            icon: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Monitor, {
+                size: 16,
+                color: "#64748b"
+            }, void 0, false, {
+                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                lineNumber: 69,
+                columnNumber: 30
+            }, ("TURBOPACK compile-time value", void 0))
         }
     ];
-    // Handle Folder Click
-    const handleItemClick = (item)=>{
-        if (item.type === "folder" || item.type === "drive") {
-            // Agar folder hai aur data exist karta hai toh switch karo
-            if (fileSystem[item.name]) {
-                setCurrentPath(item.name);
-            } else {
-                // Empty folder simulation
-                setCurrentPath(item.name);
-            }
-        } else {
-            console.log(`Opening file: ${item.name}`);
+    // --- LOGIC ---
+    const handleNavigate = (path)=>{
+        // Agar path exist nahi karta fileSystem me, toh kuch mat karo (ya error dikhao)
+        if (!fileSystem[path] && ![
+            "Quick Access",
+            "This PC",
+            "Desktop",
+            "Downloads",
+            "Documents",
+            "Pictures"
+        ].includes(path)) {
+            // Maybe it's a subfolder logic we haven't implemented fully
+            // For now, treat it as empty folder if key exists
+            if (!Object.keys(fileSystem).includes(path)) return;
+        }
+        const newHistory = history.slice(0, historyIndex + 1);
+        newHistory.push(path);
+        setHistory(newHistory);
+        setHistoryIndex(newHistory.length - 1);
+        setCurrentPath(path);
+        setSelectedItem(null);
+    };
+    const handleBack = ()=>{
+        if (historyIndex > 0) {
+            setHistoryIndex(historyIndex - 1);
+            setCurrentPath(history[historyIndex - 1]);
         }
     };
-    // Safe check: Agar path exist nahi karta (empty folder) to empty array dikhao
+    const handleForward = ()=>{
+        if (historyIndex < history.length - 1) {
+            setHistoryIndex(historyIndex + 1);
+            setCurrentPath(history[historyIndex + 1]);
+        }
+    };
+    const handleUp = ()=>{
+        // Simple Up logic for flat structure
+        if (currentPath !== "This PC" && currentPath !== "Quick Access") {
+            handleNavigate("This PC"); // Default to PC for now
+        }
+    };
+    const handleItemDoubleClick = (item)=>{
+        if (item.type === "folder" || item.type === "disk") {
+            handleNavigate(item.name);
+        } else {
+            alert(`Opening file: ${item.name}`);
+        }
+    };
     const currentFiles = fileSystem[currentPath] || [];
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        className: "explorer-window",
-        onClick: (e)=>e.stopPropagation(),
+        className: "explorer-container",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "explorer-header",
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "window-title",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                src: "https://img.icons8.com/fluency/48/folder-invoices--v1.png",
-                                alt: "icon"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 74,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                children: "File Explorer"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 75,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0))
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                        lineNumber: 73,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "window-controls",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "control minimize",
-                                children: "─"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 78,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "control maximize",
-                                children: "□"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 79,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "control close",
-                                onClick: onClose,
-                                children: "✕"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 80,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0))
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                        lineNumber: 77,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0))
-                ]
-            }, void 0, true, {
-                fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                lineNumber: 72,
-                columnNumber: 7
-            }, ("TURBOPACK compile-time value", void 0)),
-            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "explorer-nav-bar",
+                className: "explorer-toolbar-top",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "nav-buttons",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                children: "←"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                disabled: historyIndex === 0,
+                                onClick: handleBack,
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ArrowLeft, {
+                                    size: 16
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                    lineNumber: 126,
+                                    columnNumber: 72
+                                }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 87,
-                                columnNumber: 14
+                                lineNumber: 126,
+                                columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                children: "→"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                disabled: historyIndex === history.length - 1,
+                                onClick: handleForward,
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ArrowRight, {
+                                    size: 16
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                    lineNumber: 127,
+                                    columnNumber: 92
+                                }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 88,
-                                columnNumber: 14
+                                lineNumber: 127,
+                                columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                children: "↑"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: handleUp,
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ArrowUp, {
+                                    size: 16
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                    lineNumber: 128,
+                                    columnNumber: 40
+                                }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 89,
-                                columnNumber: 14
+                                lineNumber: 128,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                onClick: ()=>{},
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(RotateCw, {
+                                    size: 14
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                    lineNumber: 129,
+                                    columnNumber: 40
+                                }, ("TURBOPACK compile-time value", void 0))
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                lineNumber: 129,
+                                columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                        lineNumber: 86,
+                        lineNumber: 125,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "address-bar",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                src: "https://img.icons8.com/fluency/48/monitor--v1.png",
-                                alt: "pc"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Monitor, {
+                                size: 14,
+                                className: "addr-icon"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 92,
+                                lineNumber: 133,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                children: currentPath
-                            }, void 0, false, {
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "breadcrumbs",
+                                children: [
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                        children: currentPath
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                        lineNumber: 135,
+                                        columnNumber: 17
+                                    }, ("TURBOPACK compile-time value", void 0)),
+                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ChevronRight, {
+                                        size: 14,
+                                        className: "crumb-arrow"
+                                    }, void 0, false, {
+                                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                        lineNumber: 136,
+                                        columnNumber: 17
+                                    }, ("TURBOPACK compile-time value", void 0))
+                                ]
+                            }, void 0, true, {
                                 fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 93,
+                                lineNumber: 134,
                                 columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                        lineNumber: 91,
+                        lineNumber: 132,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "search-bar",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                            type: "text",
-                            placeholder: `Search ${currentPath}`
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                            lineNumber: 96,
-                            columnNumber: 13
-                        }, ("TURBOPACK compile-time value", void 0))
-                    }, void 0, false, {
+                        className: "search-box",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Search, {
+                                size: 14,
+                                className: "search-icon"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                lineNumber: 141,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                type: "text",
+                                placeholder: `Search ${currentPath}`,
+                                value: searchQuery,
+                                onChange: (e)=>setSearchQuery(e.target.value)
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                lineNumber: 142,
+                                columnNumber: 13
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                        lineNumber: 95,
+                        lineNumber: 140,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                lineNumber: 85,
+                lineNumber: 124,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "explorer-command-bar",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "cmd-btn",
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Plus, {
+                                size: 18
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                lineNumber: 153,
+                                columnNumber: 34
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                children: "New"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                lineNumber: 153,
+                                columnNumber: 52
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 153,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "divider"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 154,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "cmd-btn",
+                        title: "Cut",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Scissors, {
+                            size: 18
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                            lineNumber: 155,
+                            columnNumber: 46
+                        }, ("TURBOPACK compile-time value", void 0))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 155,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "cmd-btn",
+                        title: "Copy",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Copy, {
+                            size: 18
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                            lineNumber: 156,
+                            columnNumber: 47
+                        }, ("TURBOPACK compile-time value", void 0))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 156,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "cmd-btn",
+                        title: "Paste",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(CheckSquare, {
+                            size: 18
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                            lineNumber: 157,
+                            columnNumber: 48
+                        }, ("TURBOPACK compile-time value", void 0))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 157,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "cmd-btn",
+                        title: "Rename",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(FileText, {
+                            size: 18
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                            lineNumber: 158,
+                            columnNumber: 49
+                        }, ("TURBOPACK compile-time value", void 0))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 158,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "divider"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 159,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "cmd-btn",
+                        title: "Delete",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Trash2, {
+                            size: 18
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                            lineNumber: 160,
+                            columnNumber: 49
+                        }, ("TURBOPACK compile-time value", void 0))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 160,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0))
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                lineNumber: 152,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
@@ -2815,98 +3095,159 @@ const FileExplorer = ({ isOpen, onClose })=>{
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "explorer-sidebar",
-                        children: sidebarItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: `sidebar-item ${currentPath === item.name ? "active" : ""}`,
-                                onClick: ()=>setCurrentPath(item.name),
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                        src: item.icon,
-                                        alt: item.name
-                                    }, void 0, false, {
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "sidebar-group",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "group-title",
+                                    children: "Pinned"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                    lineNumber: 169,
+                                    columnNumber: 17
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                sidebarItems.map((item)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                        className: `sidebar-item ${currentPath === item.name ? 'active' : ''}`,
+                                        onClick: ()=>handleNavigate(item.name),
+                                        children: [
+                                            item.icon,
+                                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                children: item.name
+                                            }, void 0, false, {
+                                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                                lineNumber: 177,
+                                                columnNumber: 25
+                                            }, ("TURBOPACK compile-time value", void 0))
+                                        ]
+                                    }, item.name, true, {
                                         fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                        lineNumber: 111,
+                                        lineNumber: 171,
                                         columnNumber: 21
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        children: item.name
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                        lineNumber: 112,
-                                        columnNumber: 21
-                                    }, ("TURBOPACK compile-time value", void 0))
-                                ]
-                            }, item.name, true, {
-                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 106,
-                                columnNumber: 17
-                            }, ("TURBOPACK compile-time value", void 0)))
+                                    }, ("TURBOPACK compile-time value", void 0)))
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                            lineNumber: 168,
+                            columnNumber: 13
+                        }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                        lineNumber: 104,
+                        lineNumber: 167,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "explorer-content",
                         children: currentFiles.length === 0 ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                            className: "empty-folder",
+                            className: "empty-msg",
                             children: "This folder is empty."
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                            lineNumber: 120,
+                            lineNumber: 186,
                             columnNumber: 17
-                        }, ("TURBOPACK compile-time value", void 0)) : currentFiles.map((file, index)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "file-grid-item",
-                                onDoubleClick: ()=>handleItemClick(file),
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                        src: file.icon,
-                                        alt: file.name
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                        lineNumber: 124,
-                                        columnNumber: 25
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "file-name",
-                                        children: file.name
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                        lineNumber: 125,
-                                        columnNumber: 25
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "file-type",
-                                        children: file.type
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                        lineNumber: 126,
-                                        columnNumber: 25
-                                    }, ("TURBOPACK compile-time value", void 0))
-                                ]
-                            }, index, true, {
-                                fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                                lineNumber: 123,
-                                columnNumber: 21
-                            }, ("TURBOPACK compile-time value", void 0)))
+                        }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "file-grid",
+                            children: currentFiles.filter((file)=>file.name.toLowerCase().includes(searchQuery.toLowerCase())).map((file)=>/*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: `grid-item ${selectedItem === file.id ? 'selected' : ''}`,
+                                    onClick: ()=>setSelectedItem(file.id),
+                                    onDoubleClick: ()=>handleItemDoubleClick(file),
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                            src: file.icon,
+                                            alt: file.name,
+                                            className: "item-icon"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                            lineNumber: 198,
+                                            columnNumber: 29
+                                        }, ("TURBOPACK compile-time value", void 0)),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                            className: "item-info",
+                                            children: [
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "item-name",
+                                                    children: file.name
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                                    lineNumber: 200,
+                                                    columnNumber: 33
+                                                }, ("TURBOPACK compile-time value", void 0)),
+                                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                                    className: "item-type",
+                                                    children: file.type === 'folder' ? 'File folder' : file.size
+                                                }, void 0, false, {
+                                                    fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                                    lineNumber: 201,
+                                                    columnNumber: 33
+                                                }, ("TURBOPACK compile-time value", void 0))
+                                            ]
+                                        }, void 0, true, {
+                                            fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                            lineNumber: 199,
+                                            columnNumber: 29
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    ]
+                                }, file.id, true, {
+                                    fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                                    lineNumber: 192,
+                                    columnNumber: 25
+                                }, ("TURBOPACK compile-time value", void 0)))
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                            lineNumber: 188,
+                            columnNumber: 17
+                        }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                        lineNumber: 118,
+                        lineNumber: 184,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/apps/FileExplorer.jsx",
-                lineNumber: 101,
+                lineNumber: 164,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "explorer-footer",
+                children: [
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        children: [
+                            currentFiles.length,
+                            " items"
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 212,
+                        columnNumber: 10
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "footer-divider"
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 213,
+                        columnNumber: 10
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                        children: selectedItem ? '1 item selected' : ''
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                        lineNumber: 214,
+                        columnNumber: 10
+                    }, ("TURBOPACK compile-time value", void 0))
+                ]
+            }, void 0, true, {
+                fileName: "[project]/src/components/apps/FileExplorer.jsx",
+                lineNumber: 211,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/apps/FileExplorer.jsx",
-        lineNumber: 69,
+        lineNumber: 121,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(FileExplorer, "F5Slim64hTEEbNaJeLdZbWmC4oE=");
+_s(FileExplorer, "nIHNcqDun5dAWRJh/vLV9e6stSI=");
 _c = FileExplorer;
 const __TURBOPACK__default__export__ = FileExplorer;
 var _c;
@@ -2924,335 +3265,374 @@ __turbopack_context__.s([
 ]);
 var __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/abhay-os/node_modules/next/dist/compiled/react/jsx-dev-runtime.js [app-client] (ecmascript)");
 var __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__ = __turbopack_context__.i("[project]/abhay-os/node_modules/next/dist/compiled/react/index.js [app-client] (ecmascript)");
+(()=>{
+    const e = new Error("Cannot find module 'lucide-react'");
+    e.code = 'MODULE_NOT_FOUND';
+    throw e;
+})();
 ;
 var _s = __turbopack_context__.k.signature();
 "use client";
 ;
 ;
-const Chrome = ({ isOpen, onClose })=>{
+;
+const Chrome = ()=>{
     _s();
-    if (!isOpen) return null;
-    // --- STATE FOR BROWSER ---
-    const [url, setUrl] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("https://www.wikipedia.org"); // Default working site
-    const [inputUrl, setInputUrl] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("https://www.wikipedia.org");
-    const [history, setHistory] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])([]);
-    // --- STATE FOR WINDOW (Drag & Resize) ---
-    const [isMaximized, setIsMaximized] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [position, setPosition] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
-        x: 100,
-        y: 50
-    });
-    const [isDragging, setIsDragging] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])(false);
-    const [dragOffset, setDragOffset] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])({
-        x: 0,
-        y: 0
-    });
-    const windowRef = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useRef"])(null);
-    // --- DRAG LOGIC ---
-    const handleMouseDown = (e)=>{
-        // Sirf header pe click hone par drag karein, buttons pe nahi
-        if (e.target.closest('.window-controls') || e.target.closest('.chrome-tab')) return;
-        setIsDragging(true);
-        setDragOffset({
-            x: e.clientX - position.x,
-            y: e.clientY - position.y
-        });
-    };
-    const handleMouseMove = (e)=>{
-        if (isDragging && !isMaximized) {
-            setPosition({
-                x: e.clientX - dragOffset.x,
-                y: e.clientY - dragOffset.y
-            });
-        }
-    };
-    const handleMouseUp = ()=>{
-        setIsDragging(false);
-    };
-    // Global mouse events for dragging
+    const [url, setUrl] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("https://www.google.com/webhp?igu=1");
+    const [displayUrl, setDisplayUrl] = (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useState"])("");
     (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
         "Chrome.useEffect": ()=>{
-            if (isDragging) {
-                window.addEventListener('mousemove', handleMouseMove);
-                window.addEventListener('mouseup', handleMouseUp);
-            } else {
-                window.removeEventListener('mousemove', handleMouseMove);
-                window.removeEventListener('mouseup', handleMouseUp);
-            }
-            return ({
-                "Chrome.useEffect": ()=>{
-                    window.removeEventListener('mousemove', handleMouseMove);
-                    window.removeEventListener('mouseup', handleMouseUp);
-                }
-            })["Chrome.useEffect"];
+            setDisplayUrl("");
         }
-    }["Chrome.useEffect"], [
-        isDragging
-    ]);
-    // --- BROWSER LOGIC ---
-    const handleNavigate = (e)=>{
+    }["Chrome.useEffect"], []);
+    const handleKeyDown = (e)=>{
         if (e.key === 'Enter') {
-            let finalUrl = inputUrl;
-            if (!finalUrl.startsWith('http')) {
-                finalUrl = 'https://' + finalUrl;
+            let target = displayUrl;
+            if (!target.includes('.') || target.includes(' ')) {
+                target = `https://www.bing.com/search?q=${encodeURIComponent(target)}`;
+            } else {
+                if (!target.startsWith('http')) {
+                    target = `https://${target}`;
+                }
             }
-            setHistory([
-                ...history,
-                url
-            ]);
-            setUrl(finalUrl);
+            setUrl(target);
         }
     };
-    const refreshPage = ()=>{
+    const handleRefresh = ()=>{
         const current = url;
         setUrl('');
-        setTimeout(()=>setUrl(current), 100);
+        setTimeout(()=>setUrl(current), 50);
     };
     return /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-        ref: windowRef,
-        className: `chrome-window ${isMaximized ? 'maximized' : ''}`,
-        style: {
-            left: isMaximized ? 0 : position.x,
-            top: isMaximized ? 0 : position.y
-        },
-        onClick: (e)=>e.stopPropagation(),
+        className: "chrome-app-container",
         children: [
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "chrome-header",
-                onMouseDown: handleMouseDown,
-                children: [
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "chrome-tabs-container",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "chrome-tab active",
-                                children: [
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                                        src: "https://img.icons8.com/color/48/google-logo.png",
-                                        alt: "icon"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/apps/Chrome.jsx",
-                                        lineNumber: 96,
-                                        columnNumber: 17
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        children: "New Tab"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/apps/Chrome.jsx",
-                                        lineNumber: 97,
-                                        columnNumber: 17
-                                    }, ("TURBOPACK compile-time value", void 0)),
-                                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                        className: "close-tab",
-                                        children: "×"
-                                    }, void 0, false, {
-                                        fileName: "[project]/src/components/apps/Chrome.jsx",
-                                        lineNumber: 98,
-                                        columnNumber: 17
-                                    }, ("TURBOPACK compile-time value", void 0))
-                                ]
-                            }, void 0, true, {
-                                fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 95,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                                className: "chrome-new-tab",
-                                children: "+"
+                className: "chrome-tabs-bar",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                    className: "tabs-wrapper",
+                    children: [
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "chrome-tab active",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "tab-shape-left"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                                    lineNumber: 43,
+                                    columnNumber: 14
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "tab-content",
+                                    children: [
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                            src: "https://upload.wikimedia.org/wikipedia/commons/2/2d/Google-favicon-2015.png",
+                                            alt: "G",
+                                            className: "tab-icon"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/apps/Chrome.jsx",
+                                            lineNumber: 45,
+                                            columnNumber: 16
+                                        }, ("TURBOPACK compile-time value", void 0)),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                            className: "tab-text",
+                                            children: "New Tab"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/apps/Chrome.jsx",
+                                            lineNumber: 46,
+                                            columnNumber: 16
+                                        }, ("TURBOPACK compile-time value", void 0)),
+                                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(X, {
+                                            size: 13,
+                                            className: "tab-close-icon"
+                                        }, void 0, false, {
+                                            fileName: "[project]/src/components/apps/Chrome.jsx",
+                                            lineNumber: 47,
+                                            columnNumber: 16
+                                        }, ("TURBOPACK compile-time value", void 0))
+                                    ]
+                                }, void 0, true, {
+                                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                                    lineNumber: 44,
+                                    columnNumber: 14
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                    className: "tab-shape-right"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                                    lineNumber: 49,
+                                    columnNumber: 14
+                                }, ("TURBOPACK compile-time value", void 0))
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/components/apps/Chrome.jsx",
+                            lineNumber: 42,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0)),
+                        /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "new-tab-btn",
+                            children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Plus, {
+                                size: 16,
+                                color: "#4b5563"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 100,
-                                columnNumber: 13
+                                lineNumber: 52,
+                                columnNumber: 14
                             }, ("TURBOPACK compile-time value", void 0))
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/apps/Chrome.jsx",
-                        lineNumber: 94,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "window-controls",
-                        children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "control minimize",
-                                children: "─"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 105,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "control maximize",
-                                onClick: ()=>setIsMaximized(!isMaximized),
-                                children: isMaximized ? '❐' : '□'
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 106,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "control close-btn",
-                                onClick: onClose,
-                                children: "✕"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 109,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0))
-                        ]
-                    }, void 0, true, {
-                        fileName: "[project]/src/components/apps/Chrome.jsx",
-                        lineNumber: 104,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0))
-                ]
-            }, void 0, true, {
+                        }, void 0, false, {
+                            fileName: "[project]/src/components/apps/Chrome.jsx",
+                            lineNumber: 51,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0))
+                    ]
+                }, void 0, true, {
+                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                    lineNumber: 41,
+                    columnNumber: 9
+                }, ("TURBOPACK compile-time value", void 0))
+            }, void 0, false, {
                 fileName: "[project]/src/components/apps/Chrome.jsx",
-                lineNumber: 91,
+                lineNumber: 40,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "chrome-nav-bar",
+                className: "chrome-toolbar",
                 children: [
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "nav-actions",
+                        className: "nav-buttons",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "nav-btn",
-                                children: "←"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: "icon-btn",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ArrowLeft, {
+                                    size: 16
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                                    lineNumber: 61,
+                                    columnNumber: 40
+                                }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 116,
-                                columnNumber: 14
+                                lineNumber: 61,
+                                columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "nav-btn",
-                                children: "→"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: "icon-btn",
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(ArrowRight, {
+                                    size: 16
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                                    lineNumber: 62,
+                                    columnNumber: 40
+                                }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 117,
-                                columnNumber: 14
+                                lineNumber: 62,
+                                columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "nav-btn",
-                                onClick: refreshPage,
-                                children: "⟳"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
+                                className: "icon-btn",
+                                onClick: handleRefresh,
+                                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(RotateCw, {
+                                    size: 14
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                                    lineNumber: 63,
+                                    columnNumber: 64
+                                }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 118,
-                                columnNumber: 14
+                                lineNumber: 63,
+                                columnNumber: 11
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/apps/Chrome.jsx",
-                        lineNumber: 115,
+                        lineNumber: 60,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "omnibox",
+                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                            className: "omnibox-wrapper",
+                            children: [
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Lock, {
+                                    size: 12,
+                                    className: "lock-icon text-green-700"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                                    lineNumber: 68,
+                                    columnNumber: 14
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
+                                    type: "text",
+                                    className: "address-input",
+                                    value: displayUrl,
+                                    onChange: (e)=>setDisplayUrl(e.target.value),
+                                    onKeyDown: handleKeyDown,
+                                    placeholder: "Search Google or type a URL"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                                    lineNumber: 69,
+                                    columnNumber: 14
+                                }, ("TURBOPACK compile-time value", void 0)),
+                                /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(Star, {
+                                    size: 14,
+                                    className: "star-icon"
+                                }, void 0, false, {
+                                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                                    lineNumber: 77,
+                                    columnNumber: 14
+                                }, ("TURBOPACK compile-time value", void 0))
+                            ]
+                        }, void 0, true, {
+                            fileName: "[project]/src/components/apps/Chrome.jsx",
+                            lineNumber: 67,
+                            columnNumber: 11
+                        }, ("TURBOPACK compile-time value", void 0))
+                    }, void 0, false, {
+                        fileName: "[project]/src/components/apps/Chrome.jsx",
+                        lineNumber: 66,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "profile-menu",
                         children: [
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "lock-icon",
-                                children: "🔒"
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                                className: "profile-pic",
+                                children: "A"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 123,
-                                columnNumber: 13
+                                lineNumber: 82,
+                                columnNumber: 12
                             }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("input", {
-                                type: "text",
-                                value: inputUrl,
-                                onChange: (e)=>setInputUrl(e.target.value),
-                                onKeyDown: handleNavigate,
-                                onFocus: (e)=>e.target.select()
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])(MoreVertical, {
+                                size: 16,
+                                className: "menu-icon"
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 124,
-                                columnNumber: 13
-                            }, ("TURBOPACK compile-time value", void 0)),
-                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
-                                className: "star-icon",
-                                children: "☆"
-                            }, void 0, false, {
-                                fileName: "[project]/src/components/apps/Chrome.jsx",
-                                lineNumber: 131,
-                                columnNumber: 13
+                                lineNumber: 83,
+                                columnNumber: 12
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/apps/Chrome.jsx",
-                        lineNumber: 122,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "chrome-profile",
-                        children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
-                            src: "https://i.postimg.cc/cLbyKrVB/image.png",
-                            alt: "Profile"
-                        }, void 0, false, {
-                            fileName: "[project]/src/components/apps/Chrome.jsx",
-                            lineNumber: 135,
-                            columnNumber: 13
-                        }, ("TURBOPACK compile-time value", void 0))
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/apps/Chrome.jsx",
-                        lineNumber: 134,
-                        columnNumber: 9
-                    }, ("TURBOPACK compile-time value", void 0)),
-                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "menu-dots",
-                        children: "⋮"
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/apps/Chrome.jsx",
-                        lineNumber: 137,
+                        lineNumber: 81,
                         columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/apps/Chrome.jsx",
-                lineNumber: 114,
+                lineNumber: 59,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                className: "chrome-body",
+                className: "bookmarks-bar",
                 children: [
-                    url ? /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("iframe", {
-                        src: url,
-                        title: "Browser",
-                        className: "browser-frame"
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "bookmark",
+                        onClick: ()=>setUrl("https://github.com/abhay-os"),
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                src: "https://github.githubassets.com/favicons/favicon.svg",
+                                alt: ""
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/Chrome.jsx",
+                                lineNumber: 90,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                children: "GitHub"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/Chrome.jsx",
+                                lineNumber: 91,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/src/components/apps/Chrome.jsx",
-                        lineNumber: 143,
-                        columnNumber: 13
-                    }, ("TURBOPACK compile-time value", void 0)) : /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "loading-screen",
-                        children: "Loading..."
-                    }, void 0, false, {
-                        fileName: "[project]/src/components/apps/Chrome.jsx",
-                        lineNumber: 151,
-                        columnNumber: 13
+                        lineNumber: 89,
+                        columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0)),
-                    !isMaximized && /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
-                        className: "resize-handle"
-                    }, void 0, false, {
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "bookmark",
+                        onClick: ()=>setUrl("https://vscode.dev"),
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                src: "https://upload.wikimedia.org/wikipedia/commons/9/9a/Visual_Studio_Code_1.35_icon.svg",
+                                alt: ""
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/Chrome.jsx",
+                                lineNumber: 94,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                children: "VS Code"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/Chrome.jsx",
+                                lineNumber: 95,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
                         fileName: "[project]/src/components/apps/Chrome.jsx",
-                        lineNumber: 155,
-                        columnNumber: 26
+                        lineNumber: 93,
+                        columnNumber: 9
+                    }, ("TURBOPACK compile-time value", void 0)),
+                    /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                        className: "bookmark",
+                        onClick: ()=>setUrl("https://linkedin.com"),
+                        children: [
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("img", {
+                                src: "https://content.linkedin.com/content/dam/me/business/en-us/amp/brand-site/v2/bg/LI-Bug.svg.original.svg",
+                                alt: ""
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/Chrome.jsx",
+                                lineNumber: 98,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0)),
+                            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
+                                children: "LinkedIn"
+                            }, void 0, false, {
+                                fileName: "[project]/src/components/apps/Chrome.jsx",
+                                lineNumber: 99,
+                                columnNumber: 11
+                            }, ("TURBOPACK compile-time value", void 0))
+                        ]
+                    }, void 0, true, {
+                        fileName: "[project]/src/components/apps/Chrome.jsx",
+                        lineNumber: 97,
+                        columnNumber: 9
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/apps/Chrome.jsx",
-                lineNumber: 141,
+                lineNumber: 88,
+                columnNumber: 7
+            }, ("TURBOPACK compile-time value", void 0)),
+            /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
+                className: "chrome-content",
+                children: /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("iframe", {
+                    src: url,
+                    className: "browser-iframe",
+                    title: "Chrome Browser",
+                    sandbox: "allow-same-origin allow-scripts allow-forms allow-popups"
+                }, void 0, false, {
+                    fileName: "[project]/src/components/apps/Chrome.jsx",
+                    lineNumber: 105,
+                    columnNumber: 9
+                }, ("TURBOPACK compile-time value", void 0))
+            }, void 0, false, {
+                fileName: "[project]/src/components/apps/Chrome.jsx",
+                lineNumber: 104,
                 columnNumber: 7
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/apps/Chrome.jsx",
-        lineNumber: 79,
+        lineNumber: 37,
         columnNumber: 5
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(Chrome, "mvvM8WgJ8MMUqJ+FZGohLAxOGT8=");
+_s(Chrome, "flriFLmGnOHN/E5xv6oniBZTquQ=");
 _c = Chrome;
 const __TURBOPACK__default__export__ = Chrome;
 var _c;

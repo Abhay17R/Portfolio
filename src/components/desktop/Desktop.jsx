@@ -4,30 +4,53 @@ import { useOS } from "@/context/OSContext";
 import Taskbar from "./Taskbar";
 import DesktopIcon from "./DesktopIcon";
 import StartMenu from "./StartMenu";
-import WindowFrame from "../ui/windows/WindowFrame"; // <--- Updated Import
+import WindowFrame from "../ui/windows/WindowFrame";
+import Calculator from "../apps/Calculator";
 
-// Apps Imports
+// --- Apps Imports ---
 import FileExplorer from "../apps/FileExplorer"; 
 import Chrome from "../apps/Chrome";
+import MyProjects from "../apps/MyProjects"; // <--- 1. NEW IMPORT ADDED
 
 import "@/styles/Desktop.css"; 
 
 const Desktop = () => {
-  const { osMode, windows, openApp } = useOS(); // <--- Context se windows le rahe hain
+  const { osMode, windows, openApp } = useOS();
   const [bgStyle, setBgStyle] = useState({});
   const [startMenuOpen, setStartMenuOpen] = useState(false);
 
   // --- APP OPEN HANDLERS ---
+  
   const handleOpenExplorer = () => {
     openApp("explorer", "File Explorer", "https://img.icons8.com/fluency/48/folder-invoices--v1.png", <FileExplorer />);
   };
 
+  
+
   const handleOpenChrome = () => {
     openApp("chrome", "Google Chrome", "https://img.icons8.com/color/48/chrome--v1.png", <Chrome />);
   };
+
+  // <--- 2. NEW HANDLER FOR PROJECTS ---
+  const handleOpenProjects = () => {
+    openApp(
+      "projects", // ID
+      "My Projects", // Window Title
+      "https://img.icons8.com/color/48/project-setup.png", // Icon
+      <MyProjects /> // Component jo render hoga
+    );
+  };
   
+  const handleOpenCalculator = () => {
+  openApp(
+    "calculator",
+    "Calculator",
+    "https://img.icons8.com/fluency/48/calculator.png",
+    <Calculator />, 
+    { width: 350, height: 520 } // Default size
+  );
+};
   const handleOpenTerminal = () => {
-     // Abhi Terminal ka component nahi hai, baad me replace kar dena
      console.log("Terminal logic coming soon");
   };
 
@@ -42,7 +65,7 @@ const Desktop = () => {
     if (startMenuOpen) setStartMenuOpen(false);
   };
 
-  // Chaos Mode Effect (Tera purana logic)
+  // Chaos Mode Effect
   useEffect(() => {
     if (osMode !== "chaos") {
       setBgStyle({});
@@ -65,17 +88,17 @@ const Desktop = () => {
       <div 
         className="wallpaper-layer"
         style={{
-          backgroundImage: "url('/wallpaper.jpg')",
+          backgroundImage: "url('/wallpaper.jpg')", // Make sure ye image public folder me ho
           ...bgStyle
         }}
       ></div>
 
       {/* 2. BACKGROUND TEXT */}
       <div className="hero-text-container">
-        <h1 className="hero-name">Abhay kumar Jha</h1> 
+        <h1 className="hero-name">Abhay Kumar Jha</h1> 
       </div>
 
-      {/* 3. DESKTOP ICONS - Ab Context use kar rahe hain */}
+      {/* 3. DESKTOP ICONS */}
       <div className="icons-grid">
         <DesktopIcon 
             label="About Me" 
@@ -83,10 +106,12 @@ const Desktop = () => {
             onClick={() => console.log("Open About")} 
         />
         
+        {/* <--- 3. UPDATED CLICK HANDLER HERE --- */}
+     
         <DesktopIcon 
             label="My Projects" 
             iconSrc="https://img.icons8.com/color/48/project-setup.png" 
-            onClick={handleOpenExplorer} 
+            onClick={handleOpenProjects} 
         />
         
         <DesktopIcon 
@@ -106,10 +131,16 @@ const Desktop = () => {
             iconSrc="https://img.icons8.com/color/48/console.png" 
             onClick={handleOpenTerminal} 
         />
-      </div>
 
-      {/* 4. WINDOWS RENDERING LAYER (Ye naya magic hai) */}
-      {/* Jo bhi window 'windows' array me hogi, wo yahan render hogi */}
+          <DesktopIcon 
+  label="Calculator" 
+  iconSrc="https://img.icons8.com/fluency/48/calculator.png" 
+  onClick={handleOpenCalculator} 
+/>
+      </div>
+      
+
+      {/* 4. WINDOWS RENDERING LAYER */}
       {windows.map((win) => (
         <WindowFrame key={win.id} windowData={win} />
       ))}
@@ -122,6 +153,7 @@ const Desktop = () => {
         onStartClick={toggleStartMenu} 
         onExplorerClick={handleOpenExplorer}
         onChromeClick={handleOpenChrome}
+        // Agar Taskbar me bhi Projects ka icon chahiye to yahan prop pass kar dena
       />
 
     </div>

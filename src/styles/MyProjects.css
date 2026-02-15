@@ -1,0 +1,223 @@
+/* Container Layout */
+.project-app-container {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  background: #0f0f12; /* Deep Dark Bg */
+  color: white;
+  font-family: 'Segoe UI', sans-serif;
+}
+
+/* --- SIDEBAR --- */
+.project-sidebar {
+  width: 220px;
+  background: rgba(20, 20, 30, 0.6);
+  backdrop-filter: blur(10px);
+  border-right: 1px solid rgba(255, 255, 255, 0.1);
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: bold;
+  margin-bottom: 30px;
+  color: #fff;
+}
+
+.cat-btn {
+  background: transparent;
+  border: none;
+  color: #aaa;
+  text-align: left;
+  padding: 12px 15px;
+  margin-bottom: 5px;
+  cursor: pointer;
+  border-radius: 8px;
+  transition: 0.3s;
+  font-size: 14px;
+}
+
+.cat-btn:hover {
+  background: rgba(255, 255, 255, 0.05);
+  color: white;
+  padding-left: 20px; /* Slight slide effect */
+}
+
+.cat-btn.active {
+  background: rgba(0, 243, 255, 0.15); /* Neon Blue Tint */
+  color: #00f3ff;
+  border-left: 3px solid #00f3ff;
+  font-weight: 600;
+}
+
+/* --- MAIN AREA --- */
+.project-grid-area {
+  flex: 1;
+  padding: 30px;
+  overflow-y: auto;
+  background: linear-gradient(to bottom right, #0f0f12, #1a1a20);
+}
+
+.grid-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.grid-header h2 {
+  font-size: 24px;
+  font-weight: 300;
+}
+
+.search-bar {
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  padding: 8px 15px;
+  border-radius: 20px;
+  color: white;
+  outline: none;
+  width: 250px;
+  transition: 0.3s;
+}
+
+.search-bar:focus {
+  border-color: #00f3ff;
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.2);
+}
+
+/* --- PROJECT CARDS --- */
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 25px;
+  padding-bottom: 50px;
+}
+
+.project-card {
+  background: rgba(30, 30, 40, 0.7);
+  border: 1px solid rgba(255, 255, 255, 0.05);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: all 0.3s ease;
+  position: relative;
+}
+
+.project-card:hover {
+  transform: translateY(-5px);
+  border-color: rgba(0, 243, 255, 0.5); /* Neon border on hover */
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+}
+
+/* Image Area */
+.card-image {
+  height: 160px;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
+}
+
+.card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: 0.5s;
+}
+
+.project-card:hover .card-image img {
+  transform: scale(1.1); /* Zoom effect */
+}
+
+/* Overlay Button (Hidden by default) */
+.card-overlay {
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.project-card:hover .card-overlay {
+  opacity: 1;
+}
+
+.overlay-btn {
+  padding: 8px 20px;
+  background: #00f3ff;
+  color: #000;
+  text-decoration: none;
+  border-radius: 20px;
+  font-weight: bold;
+  transform: translateY(20px);
+  transition: 0.3s;
+}
+
+.project-card:hover .overlay-btn {
+  transform: translateY(0);
+}
+
+/* Content Area */
+.card-content {
+  padding: 20px;
+}
+
+.card-content h3 {
+  margin: 0 0 10px 0;
+  font-size: 18px;
+  color: #fff;
+}
+
+.card-content p {
+  font-size: 13px;
+  color: #aaa;
+  line-height: 1.4;
+  margin-bottom: 15px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* Limit text to 2 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 15px;
+}
+
+.tech-tags span {
+  font-size: 11px;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 4px 8px;
+  border-radius: 4px;
+  color: #ccc;
+}
+
+.card-actions {
+  display: flex;
+  gap: 15px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  padding-top: 15px;
+}
+
+.card-actions a {
+  display: flex;
+  align-items: center;
+  gap: 5px;
+  color: #888;
+  font-size: 13px;
+  text-decoration: none;
+  transition: 0.2s;
+}
+
+.card-actions a:hover {
+  color: #00f3ff;
+}
