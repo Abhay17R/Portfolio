@@ -1,0 +1,134 @@
+/* [project]/src/styles/Notepad.css [app-client] (css) */
+:root {
+  --notepad-bg: #0f0f19e6;
+  --notepad-accent: #00f3ff;
+  --notepad-text: #e0e0e0;
+  --gutter-bg: #0000004d;
+  --gutter-text: #555;
+}
+
+.notepad-container {
+  background: var(--notepad-bg);
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  width: 100%;
+  height: 100%;
+  color: var(--notepad-text);
+  flex-direction: column;
+  font-family: Fira Code, Consolas, monospace;
+  display: flex;
+  overflow: hidden;
+}
+
+.np-toolbar {
+  background: #0003;
+  border-bottom: 1px solid #ffffff1a;
+  justify-content: space-between;
+  align-items: center;
+  height: 40px;
+  padding: 0 15px;
+  display: flex;
+}
+
+.np-btn {
+  color: #aaa;
+  cursor: pointer;
+  background: none;
+  border: 1px solid #ffffff1a;
+  border-radius: 4px;
+  align-items: center;
+  gap: 6px;
+  padding: 5px 10px;
+  font-size: .8rem;
+  transition: all .2s;
+  display: flex;
+}
+
+.np-btn:hover {
+  color: #fff;
+  border-color: var(--notepad-accent);
+  background: #ffffff1a;
+}
+
+.np-btn.active-glow {
+  color: var(--notepad-accent);
+  border-color: var(--notepad-accent);
+  background: #00f3ff26;
+  box-shadow: 0 0 10px #00f3ff4d;
+}
+
+.np-editor-area {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+.np-gutter {
+  background: var(--gutter-bg);
+  text-align: right;
+  -webkit-user-select: none;
+  user-select: none;
+  border-right: 1px solid #ffffff0d;
+  width: 40px;
+  padding: 10px 5px;
+  overflow: hidden;
+}
+
+.gutter-num {
+  color: var(--gutter-text);
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+.np-textarea {
+  resize: none;
+  color: var(--notepad-text);
+  white-space: pre;
+  background: none;
+  border: none;
+  outline: none;
+  flex: 1;
+  padding: 10px;
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  overflow-y: auto;
+}
+
+.notepad-container.hacker-mode .np-textarea {
+  color: var(--notepad-accent);
+  text-shadow: 0 0 5px var(--notepad-accent), 0 0 10px #00f3ff80;
+}
+
+.notepad-container.hacker-mode .gutter-num {
+  color: #00f3ff66;
+}
+
+.np-statusbar {
+  color: #777;
+  background: #0006;
+  border-top: 1px solid #ffffff0d;
+  justify-content: flex-end;
+  align-items: center;
+  gap: 15px;
+  height: 25px;
+  padding: 0 15px;
+  font-size: .7rem;
+  display: flex;
+}
+
+.np-textarea::-webkit-scrollbar {
+  width: 6px;
+}
+
+.np-textarea::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 3px;
+}
+
+.np-textarea::-webkit-scrollbar-thumb:hover {
+  background: var(--notepad-accent);
+}
+
+/*# sourceMappingURL=%5Bproject%5D_src_styles_Notepad_css_bad6b30c._.single.css.map*/

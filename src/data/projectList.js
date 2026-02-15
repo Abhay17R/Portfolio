@@ -1,23 +1,23 @@
 export const projectData = [
   {
-    id: 1,
-    title: "MaestroMap",
-    description: "AI-Powered Smart Travel Assistant with Google Maps Integration.",
-    image: "https://images.unsplash.com/photo-1469854523086-cc02fe5d8800?w=800&q=80", // Replace with your image
-    category: "AI/ML",
-    techStack: ["Python", "Flask", "React", "Google Maps API"],
-    link: "#",
-    github: "#"
+    id: 101, // Unique ID
+    title: "Family Management System",
+    description: "Centralized MERN platform for family logistics & safety. Features real-time location tracking, emergency alerts, expense coordination, and secure role-based access for 500+ users.",
+    image: "https://images.unsplash.com/photo-1517245386807-bb43f82c33c4?q=80&w=800&auto=format&fit=crop", // Connection/Dashboard vibe
+    category: "Web",
+    techStack: ["MongoDB", "Express", "React", "Node.js", "Socket.io", "JWT"],
+    link: "https://ourhome-omega.vercel.app/", // Yahan Live Link daal
+    github: "https://github.com/Abhay17R/Home-Family_Management_System-" // Yahan GitHub Link daal
   },
   {
-    id: 2,
-    title: "Superstore Sales Analyzer",
-    description: "Future Sales Prediction System using Machine Learning & Dashboard.",
-    image: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80",
-    category: "Data Science",
-    techStack: ["Pandas", "Scikit-Learn", "D3.js"],
-    link: "#",
-    github: "#"
+    id: 102,
+    title: "ServiceLink Pro",
+    description: "Scalable marketplace connecting 200+ professionals. Includes advanced search filters, conflict-free appointment booking, and a real-time chat dashboard powered by Socket.IO.",
+    image: "https://images.unsplash.com/photo-1521791136064-7986c2920216?q=80&w=800&auto=format&fit=crop", // Professional/Business vibe
+    category: "Web",
+    techStack: ["MERN Stack", "Socket.IO", "Redux", "JWT", "Tailwind"],
+    link: "https://servicelink-gules.vercel.app/", // Yahan Live Link daal
+    github: "https://github.com/Abhay17R/service" // Yahan GitHub Link daal
   },
   {
     id: 3,

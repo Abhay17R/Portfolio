@@ -1,0 +1,128 @@
+/* src/styles/Notepad.css */
+:root {
+  --notepad-bg: rgba(15, 15, 25, 0.9);
+  --notepad-accent: #00f3ff; /* Cyber Cyan */
+  --notepad-text: #e0e0e0;
+  --gutter-bg: rgba(0, 0, 0, 0.3);
+  --gutter-text: #555;
+}
+
+
+.notepad-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: var(--notepad-bg);
+  backdrop-filter: blur(20px);
+  color: var(--notepad-text);
+  font-family: 'Fira Code', 'Consolas', monospace; /* Monospace font is must */
+  overflow: hidden;
+}
+
+/* --- TOOLBAR (Top) --- */
+.np-toolbar {
+  height: 40px;
+  background: rgba(0,0,0,0.2);
+  border-bottom: 1px solid rgba(255,255,255,0.1);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+}
+
+.np-btn {
+  background: transparent;
+  border: 1px solid rgba(255,255,255,0.1);
+  color: #aaa;
+  padding: 5px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  transition: all 0.2s;
+}
+
+.np-btn:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
+  border-color: var(--notepad-accent);
+}
+
+/* The unique "Glow Mode" button active state */
+.np-btn.active-glow {
+  background: rgba(0, 243, 255, 0.15);
+  color: var(--notepad-accent);
+  box-shadow: 0 0 10px rgba(0, 243, 255, 0.3);
+  border-color: var(--notepad-accent);
+}
+
+/* --- EDITOR AREA --- */
+.np-editor-area {
+  flex: 1;
+  display: flex;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Line Numbers Gutter */
+.np-gutter {
+  width: 40px;
+  background: var(--gutter-bg);
+  border-right: 1px solid rgba(255,255,255,0.05);
+  text-align: right;
+  padding: 10px 5px;
+  user-select: none;
+  overflow: hidden;
+}
+.gutter-num {
+  color: var(--gutter-text);
+  font-size: 14px;
+  line-height: 1.5; /* Must match textarea line-height */
+}
+
+/* The Main Textarea */
+.np-textarea {
+  flex: 1;
+  background: transparent;
+  border: none;
+  resize: none;
+  color: var(--notepad-text);
+  font-family: inherit;
+  font-size: 14px;
+  line-height: 1.5;
+  padding: 10px;
+  outline: none;
+  white-space: pre; /* Important for formatting */
+  overflow-y: auto;
+}
+
+/* --- THE CRAZY MODE (Hacker Glow) --- */
+.notepad-container.hacker-mode .np-textarea {
+  color: var(--notepad-accent);
+  text-shadow: 0 0 5px var(--notepad-accent), 0 0 10px rgba(0, 243, 255, 0.5);
+}
+.notepad-container.hacker-mode .gutter-num {
+  color: rgba(0, 243, 255, 0.4);
+}
+
+/* --- STATUS BAR (Bottom) --- */
+.np-statusbar {
+  height: 25px;
+  background: rgba(0,0,0,0.4);
+  border-top: 1px solid rgba(255,255,255,0.05);
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 0 15px;
+  font-size: 0.7rem;
+  color: #777;
+  gap: 15px;
+}
+
+/* Custom Scrollbar */
+.np-textarea::-webkit-scrollbar { width: 6px; }
+.np-textarea::-webkit-scrollbar-thumb { background: #333; border-radius: 3px; }
+.np-textarea::-webkit-scrollbar-thumb:hover { background: var(--notepad-accent); }

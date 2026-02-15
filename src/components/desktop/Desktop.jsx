@@ -5,6 +5,7 @@ import Taskbar from "./Taskbar";
 import DesktopIcon from "./DesktopIcon";
 import StartMenu from "./StartMenu";
 import WindowFrame from "../ui/windows/WindowFrame";
+import Terminal from "../apps/Terminal";
 
 // --- Apps Imports ---
 import FileExplorer from "../apps/FileExplorer"; 
@@ -12,6 +13,7 @@ import Chrome from "../apps/Chrome";
 import MyProjects from "../apps/MyProjects"; 
 import Calculator from "../apps/Calculator";
 import PdfViewer from "../apps/PdfViewer"; // <--- 1. NEW IMPORT
+import Notepad from "../apps/Notepad";
 
 import "@/styles/Desktop.css"; 
 
@@ -21,6 +23,15 @@ const Desktop = () => {
   const [startMenuOpen, setStartMenuOpen] = useState(false);
 
   // --- APP OPEN HANDLERS ---
+  const handleOpenNotepad = () => {
+    openApp(
+      "notepad",  // ID same honi chahiye
+      "CyberPad", // Title
+      "https://img.icons8.com/fluency/48/code-file.png", // Icon
+      <Notepad />, 
+      { width: 600, height: 450 }
+    );
+  };
   
   const handleOpenExplorer = () => {
     openApp("explorer", "File Explorer", "https://img.icons8.com/fluency/48/folder-invoices--v1.png", <FileExplorer />);
@@ -38,7 +49,15 @@ const Desktop = () => {
       <MyProjects /> 
     );
   };
-  
+  const handleOpenTerminal = () => {
+  openApp(
+    "terminal", 
+    "Terminal", 
+    "https://img.icons8.com/color/48/console.png", // Icon
+    <Terminal />, 
+    { width: 600, height: 400 }
+  );
+};
   const handleOpenCalculator = () => {
     openApp(
       "calculator",
@@ -60,10 +79,7 @@ const Desktop = () => {
     );
   };
 
-  const handleOpenTerminal = () => {
-     console.log("Terminal logic coming soon");
-  };
-
+  
   // Toggle Start Menu
   const toggleStartMenu = (e) => {
     if(e) e.stopPropagation();
@@ -162,6 +178,7 @@ const Desktop = () => {
         onStartClick={toggleStartMenu} 
         onExplorerClick={handleOpenExplorer}
         onChromeClick={handleOpenChrome}
+        onNotepadClick={handleOpenNotepad}
       />
 
     </div>

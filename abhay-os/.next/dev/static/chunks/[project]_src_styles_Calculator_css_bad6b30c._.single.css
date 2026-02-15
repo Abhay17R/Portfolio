@@ -1,0 +1,182 @@
+/* [project]/src/styles/Calculator.css [app-client] (css) */
+:root {
+  --calc-bg: #202020;
+  --calc-btn-bg: #323232;
+  --calc-btn-hover: #3b3b3b;
+  --calc-accent: #76b9ed;
+  --neon-glow: #00f3ff;
+  --text-white: #fff;
+}
+
+.calc-container {
+  -webkit-backdrop-filter: blur(20px);
+  backdrop-filter: blur(20px);
+  color: #fff;
+  -webkit-user-select: none;
+  user-select: none;
+  background: #202020f2;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  font-family: Segoe UI, sans-serif;
+  display: flex;
+}
+
+.calc-header {
+  align-items: center;
+  gap: 15px;
+  height: 50px;
+  padding: 10px 15px;
+  display: flex;
+}
+
+.menu-btn {
+  color: #fff;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: 4px;
+  padding: 5px;
+  font-size: 1.2rem;
+}
+
+.menu-btn:hover {
+  background: #ffffff1a;
+}
+
+.mode-title {
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.mode-menu {
+  z-index: 100;
+  background: #2d2d2d;
+  flex-direction: column;
+  gap: 5px;
+  width: 200px;
+  height: calc(100% - 50px);
+  padding: 10px;
+  display: flex;
+  position: absolute;
+  top: 50px;
+  left: 0;
+  box-shadow: 4px 0 15px #00000080;
+}
+
+.menu-item {
+  color: #fff;
+  text-align: left;
+  cursor: pointer;
+  background: none;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 15px;
+  font-size: .9rem;
+  transition: all .2s;
+}
+
+.menu-item:hover {
+  background: #ffffff1a;
+}
+
+.menu-item.active {
+  background: var(--calc-accent);
+  color: #000;
+  font-weight: bold;
+}
+
+.calc-display {
+  text-align: right;
+  flex-direction: column;
+  flex: 1;
+  justify-content: flex-end;
+  align-items: flex-end;
+  padding: 0 20px 20px;
+  display: flex;
+}
+
+.history-text {
+  color: #aaa;
+  min-height: 20px;
+  margin-bottom: 5px;
+  font-size: 1rem;
+}
+
+.current-text {
+  word-break: break-all;
+  font-size: 3rem;
+  font-weight: 600;
+}
+
+.calc-keypad {
+  gap: 2px;
+  padding: 2px;
+  display: grid;
+}
+
+.calc-keypad.standard {
+  grid-template-columns: repeat(4, 1fr);
+  height: 65%;
+}
+
+.calc-keypad.scientific {
+  grid-template-columns: repeat(5, 1fr);
+  height: 70%;
+}
+
+.c-btn {
+  background: var(--calc-btn-bg);
+  color: #fff;
+  cursor: pointer;
+  border: 1px solid #0003;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  font-size: 1rem;
+  transition: all .1s;
+  display: flex;
+}
+
+.c-btn:hover {
+  background: var(--calc-btn-hover);
+  border-color: #ffffff1a;
+}
+
+.c-btn:active {
+  transform: scale(.98);
+}
+
+.btn-num {
+  background: #3b3b3b;
+  font-size: 1.2rem;
+  font-weight: bold;
+}
+
+.btn-num:hover {
+  background: #454545;
+}
+
+.btn-equal {
+  background: var(--calc-accent);
+  color: #000;
+  font-weight: bold;
+}
+
+.btn-equal:hover {
+  background: var(--neon-glow);
+  box-shadow: 0 0 15px var(--neon-glow);
+}
+
+.btn-op {
+  color: var(--neon-glow);
+  background: #282828;
+  font-size: 1.3rem;
+}
+
+.btn-sci {
+  color: #f0f;
+  font-size: .9rem;
+}
+
+/*# sourceMappingURL=%5Bproject%5D_src_styles_Calculator_css_bad6b30c._.single.css.map*/

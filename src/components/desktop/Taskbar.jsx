@@ -3,7 +3,8 @@ import React, { useState, useEffect } from "react";
 import { useOS } from "@/context/OSContext";
 import "@/styles/Taskbar.css";
 
-const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick }) => {
+// 1. 'onNotepadClick' prop add kiya
+const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick, onNotepadClick }) => {
   const { osMode, windows, activeWindowId, focusWindow, toggleMinimize } = useOS();
   const [time, setTime] = useState(new Date());
   const [chaosStyle, setChaosStyle] = useState({});
@@ -14,7 +15,7 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick }) => {
     return () => clearInterval(timer);
   }, []);
 
-  // Chaos Mode (Tera purana code)
+  // Chaos Mode
   useEffect(() => {
     if (osMode !== "chaos") {
       setChaosStyle({});
@@ -29,7 +30,7 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick }) => {
     return () => clearInterval(interval);
   }, [osMode]);
 
-  // --- LOGIC ADDED HERE ---
+  // --- LOGIC ---
   const isAppOpen = (id) => windows.some((w) => w.id === id);
   
   const isAppActive = (id) => {
@@ -40,18 +41,16 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick }) => {
   const handleAppClick = (id, openCallback) => {
     const win = windows.find((w) => w.id === id);
 
-    // Case 1: App Active hai aur Screen pe hai -> Minimize karo
+    // Case 1: App Active hai -> Minimize
     if (activeWindowId === id && !win?.isMinimized) {
       toggleMinimize(id);
     } 
-    // Case 2: App Khula hai (Background me hai YA Minimized hai)
+    // Case 2: App Background/Minimized hai -> Bring to Front
     else if (win) {
-      if (win.isMinimized) {
-        toggleMinimize(id); // <--- YE MISSING THA: Minimized hai to wapas Toggle karo (Un-minimize)
-      }
-      focusWindow(id); // Aur sabse upar (Z-index) lao
+      if (win.isMinimized) toggleMinimize(id); 
+      focusWindow(id); 
     } 
-    // Case 3: App Band hai -> Kholo
+    // Case 3: App Band hai -> Open
     else {
       openCallback && openCallback();
     }
@@ -60,16 +59,15 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick }) => {
   return (
     <div className="taskbar" style={chaosStyle} onClick={(e) => e.stopPropagation()}>
       
-      {/* Spacer jaisa tune rakha tha */}
       <div style={{ width: '100px' }}></div>
 
       <div className="taskbar-center">
-        {/* START BUTTON (Wapis Center me) */}
+        {/* START */}
         <div className="tb-icon" title="Start" onClick={onStartClick}>
           <img src="https://img.icons8.com/fluency/48/windows-11.png" alt="Start" />
         </div>
         
-        {/* FILE EXPLORER (Logic Added) */}
+        {/* FILE EXPLORER */}
         <div 
           className={`tb-icon ${isAppOpen("explorer") ? "open" : ""} ${isAppActive("explorer") ? "active" : ""}`} 
           title="File Explorer" 
@@ -78,7 +76,7 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick }) => {
           <img src="https://img.icons8.com/fluency/48/folder-invoices--v1.png" alt="Explorer" />
         </div>
         
-        {/* CHROME (Logic Added) */}
+        {/* CHROME */}
         <div 
           className={`tb-icon ${isAppOpen("chrome") ? "open" : ""} ${isAppActive("chrome") ? "active" : ""}`} 
           title="Google Chrome" 
@@ -87,11 +85,16 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick }) => {
           <img src="https://img.icons8.com/color/48/chrome--v1.png" alt="Chrome" />
         </div>
         
-        {/* Static Icons (Same as before) */}
-        <div className="tb-icon" title="Notepad">
-          <img src="https://img.icons8.com/fluency/48/notepad.png" alt="Notepad" />
+        {/* --- NOTEPAD (CYBERPAD) --- Ab ye working hai */}
+        <div 
+          className={`tb-icon ${isAppOpen("notepad") ? "open" : ""} ${isAppActive("notepad") ? "active" : ""}`}
+          title="CyberPad" 
+          onClick={() => handleAppClick("notepad", onNotepadClick)}
+        >
+          <img src="https://img.icons8.com/fluency/48/code-file.png" alt="Notepad" />
         </div>
 
+        {/* --- Static Icons --- */}
         <div className="tb-icon" title="Terminal">
           <img src="https://img.icons8.com/color/48/console.png" alt="Terminal" />
         </div>
