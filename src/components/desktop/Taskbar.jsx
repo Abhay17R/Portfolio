@@ -38,12 +38,22 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick }) => {
   };
 
   const handleAppClick = (id, openCallback) => {
-    if (isAppActive(id)) {
-      toggleMinimize(id); // Agar saamne hai to minimize
-    } else if (isAppOpen(id)) {
-      focusWindow(id); // Agar peeche hai to upar lao
-    } else {
-      openCallback && openCallback(); // Agar band hai to kholo
+    const win = windows.find((w) => w.id === id);
+
+    // Case 1: App Active hai aur Screen pe hai -> Minimize karo
+    if (activeWindowId === id && !win?.isMinimized) {
+      toggleMinimize(id);
+    } 
+    // Case 2: App Khula hai (Background me hai YA Minimized hai)
+    else if (win) {
+      if (win.isMinimized) {
+        toggleMinimize(id); // <--- YE MISSING THA: Minimized hai to wapas Toggle karo (Un-minimize)
+      }
+      focusWindow(id); // Aur sabse upar (Z-index) lao
+    } 
+    // Case 3: App Band hai -> Kholo
+    else {
+      openCallback && openCallback();
     }
   };
 

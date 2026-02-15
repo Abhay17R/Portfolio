@@ -1,0 +1,157 @@
+/* [project]/src/styles/WindowFrame.css [app-client] (css) */
+.os-window-frame {
+  background-color: #202020;
+  border: 1px solid #333;
+  border-radius: 8px;
+  flex-direction: column;
+  animation: .2s cubic-bezier(.1, .9, .2, 1) popIn;
+  display: flex;
+  overflow: hidden;
+  box-shadow: 0 10px 40px #0009;
+}
+
+@keyframes popIn {
+  from {
+    opacity: 0;
+    transform: scale(.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.window-header {
+  -webkit-user-select: none;
+  user-select: none;
+  background: #2d2d2d;
+  border-bottom: 1px solid #3a3a3a;
+  justify-content: space-between;
+  align-items: center;
+  height: 38px;
+  padding-left: 12px;
+  display: flex;
+}
+
+.title-section {
+  color: #e0e0e0;
+  align-items: center;
+  gap: 10px;
+  font-family: Segoe UI, sans-serif;
+  font-size: 13px;
+  display: flex;
+}
+
+.title-section img {
+  pointer-events: none;
+}
+
+.controls-section {
+  height: 100%;
+  display: flex;
+}
+
+.controls-section button {
+  color: #fff;
+  cursor: pointer;
+  background: none;
+  border: none;
+  justify-content: center;
+  align-items: center;
+  width: 46px;
+  height: 100%;
+  transition: background .2s;
+  display: flex;
+}
+
+.controls-section button:hover {
+  background-color: #ffffff1a;
+}
+
+.controls-section button.close-btn:hover {
+  background-color: #e81123;
+}
+
+.window-content {
+  background-color: #191919;
+  flex: 1;
+  position: relative;
+  overflow: auto;
+}
+
+.resizer {
+  z-index: 1000;
+  background: none;
+  position: absolute;
+}
+
+.r-top {
+  cursor: n-resize;
+  height: 5px;
+  top: 0;
+  left: 0;
+  right: 0;
+}
+
+.r-bottom {
+  cursor: s-resize;
+  height: 5px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+.r-left {
+  cursor: w-resize;
+  width: 5px;
+  top: 0;
+  bottom: 0;
+  left: 0;
+}
+
+.r-right {
+  cursor: e-resize;
+  width: 5px;
+  top: 0;
+  bottom: 0;
+  right: 0;
+}
+
+.r-tl {
+  cursor: nw-resize;
+  z-index: 1001;
+  width: 10px;
+  height: 10px;
+  top: 0;
+  left: 0;
+}
+
+.r-tr {
+  cursor: ne-resize;
+  z-index: 1001;
+  width: 10px;
+  height: 10px;
+  top: 0;
+  right: 0;
+}
+
+.r-bl {
+  cursor: sw-resize;
+  z-index: 1001;
+  width: 10px;
+  height: 10px;
+  bottom: 0;
+  left: 0;
+}
+
+.r-br {
+  cursor: se-resize;
+  z-index: 1001;
+  width: 10px;
+  height: 10px;
+  bottom: 0;
+  right: 0;
+}
+
+/*# sourceMappingURL=%5Bproject%5D_src_styles_WindowFrame_css_bad6b30c._.single.css.map*/

@@ -31,15 +31,47 @@ const WindowFrame = ({ windowData }) => {
     });
   };
 
+ // --- DRAGGING LOGIC ---
+  // ... handleMouseDown same rahega ...
+
+ // --- DRAGGING LOGIC ---
   useEffect(() => {
     const handleMouseMove = (e) => {
       if (isDragging) {
+        let newX = e.clientX - dragOffset.x;
+        let newY = e.clientY - dragOffset.y;
+
+        const screenWidth = window.innerWidth;
+        const screenHeight = window.innerHeight;
+        
+        // Safety Buffer: Kam se kam itna pixel header dikhna chahiye
+        const headerSafety =70; 
+
+        // 1. Horizontal (Left/Right)
+        // Window ko left/right mein aadha bahar jaane do, par pura nahi (mouse cursor logic)
+        // Ye ensure karega ki aap window ko side se pakad ke wapas la sako
+        if (newX + size.width < headerSafety) newX = -size.width + headerSafety; // Left limit
+        if (newX > screenWidth - headerSafety) newX = screenWidth - headerSafety; // Right limit
+
+        // 2. Vertical (Top/Bottom) - YE AAPKA MAIN FIX HAI
+        
+        // TOP: Upar se bahar na jaye (Title bar upar chipak jaye)
+        if (newY < 0) newY = 0;
+
+        // BOTTOM: Window neeche ja sakti hai, lekin HEADER ka top hissa
+        // screen ke bilkul end tak hi ja sakta hai minus 40px.
+        // Isse content chup jayega par Title bar dikhega.
+        if (newY > screenHeight - headerSafety) {
+          newY = screenHeight - headerSafety;
+        }
+
         setPosition({
-          x: e.clientX - dragOffset.x,
-          y: e.clientY - dragOffset.y
+          x: newX,
+          y: newY
         });
       }
     };
+
     const handleMouseUp = () => setIsDragging(false);
 
     if (isDragging) {
@@ -50,7 +82,7 @@ const WindowFrame = ({ windowData }) => {
       window.removeEventListener("mousemove", handleMouseMove);
       window.removeEventListener("mouseup", handleMouseUp);
     };
-  }, [isDragging, dragOffset]);
+  }, [isDragging, dragOffset, size]);
 
 
   // --- RESIZING LOGIC (Native implementation) ---
