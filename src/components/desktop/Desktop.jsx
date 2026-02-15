@@ -14,6 +14,7 @@ import Calculator from "../apps/Calculator";
 import PdfViewer from "../apps/PdfViewer";
 import Notepad from "../apps/Notepad";
 import Terminal from "../apps/Terminal";
+import WindowsMediaPlayer from "../apps/WindowsMediaPlayer";
 
 // --- Deep Dive Components ---
 import ProjectDive from "../apps/ProjectDive";
@@ -50,6 +51,15 @@ const Desktop = () => {
       { width: 600, height: 450 }
     );
   };
+  const handleOpenMediaPlayer = () => {
+  openApp(
+    "media-player",
+    "Windows Media Player",
+    "https://img.icons8.com/fluency/48/windows-media-player.png", // Classic Icon
+    <WindowsMediaPlayer />,
+    { width: 700, height: 500 } // Thoda wide size
+  );
+};
 
   const handleOpenExplorer = () => {
     openApp(
@@ -193,6 +203,11 @@ const Desktop = () => {
           iconSrc="https://img.icons8.com/fluency/48/calculator.png"
           onClick={handleOpenCalculator}
         />
+        <DesktopIcon 
+              label="Media Player" 
+              iconSrc="https://img.icons8.com/fluency/48/windows-media-player.png" 
+              onClick={handleOpenMediaPlayer} 
+            />
       </div>
 
       {/* 5. WINDOWS RENDERING LAYER */}
