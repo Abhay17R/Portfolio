@@ -5,12 +5,13 @@ import Taskbar from "./Taskbar";
 import DesktopIcon from "./DesktopIcon";
 import StartMenu from "./StartMenu";
 import WindowFrame from "../ui/windows/WindowFrame";
-import Calculator from "../apps/Calculator";
 
 // --- Apps Imports ---
 import FileExplorer from "../apps/FileExplorer"; 
 import Chrome from "../apps/Chrome";
-import MyProjects from "../apps/MyProjects"; // <--- 1. NEW IMPORT ADDED
+import MyProjects from "../apps/MyProjects"; 
+import Calculator from "../apps/Calculator";
+import PdfViewer from "../apps/PdfViewer"; // <--- 1. NEW IMPORT
 
 import "@/styles/Desktop.css"; 
 
@@ -25,31 +26,40 @@ const Desktop = () => {
     openApp("explorer", "File Explorer", "https://img.icons8.com/fluency/48/folder-invoices--v1.png", <FileExplorer />);
   };
 
-  
-
   const handleOpenChrome = () => {
     openApp("chrome", "Google Chrome", "https://img.icons8.com/color/48/chrome--v1.png", <Chrome />);
   };
 
-  // <--- 2. NEW HANDLER FOR PROJECTS ---
   const handleOpenProjects = () => {
     openApp(
-      "projects", // ID
-      "My Projects", // Window Title
-      "https://img.icons8.com/color/48/project-setup.png", // Icon
-      <MyProjects /> // Component jo render hoga
+      "projects", 
+      "My Projects", 
+      "https://img.icons8.com/color/48/project-setup.png", 
+      <MyProjects /> 
     );
   };
   
   const handleOpenCalculator = () => {
-  openApp(
-    "calculator",
-    "Calculator",
-    "https://img.icons8.com/fluency/48/calculator.png",
-    <Calculator />, 
-    { width: 350, height: 520 } // Default size
-  );
-};
+    openApp(
+      "calculator",
+      "Calculator",
+      "https://img.icons8.com/fluency/48/calculator.png",
+      <Calculator />, 
+      { width: 350, height: 520 } 
+    );
+  };
+
+  // <--- 2. NEW RESUME HANDLER ---
+  const handleOpenResume = () => {
+    openApp(
+      "resume", // Unique ID
+      "My Resume.pdf", // Window Title
+      "https://img.icons8.com/color/48/pdf-2--v1.png", // Icon
+      <PdfViewer fileUrl="/resume.pdf" fileName="My Resume.pdf" />, // Component (Make sure resume.pdf is in public folder)
+      { width: 800, height: 650 } // Size thoda bada A4 document ke liye
+    );
+  };
+
   const handleOpenTerminal = () => {
      console.log("Terminal logic coming soon");
   };
@@ -88,7 +98,7 @@ const Desktop = () => {
       <div 
         className="wallpaper-layer"
         style={{
-          backgroundImage: "url('/wallpaper.jpg')", // Make sure ye image public folder me ho
+          backgroundImage: "url('/wallpaper.jpg')", 
           ...bgStyle
         }}
       ></div>
@@ -106,18 +116,17 @@ const Desktop = () => {
             onClick={() => console.log("Open About")} 
         />
         
-        {/* <--- 3. UPDATED CLICK HANDLER HERE --- */}
-     
         <DesktopIcon 
             label="My Projects" 
             iconSrc="https://img.icons8.com/color/48/project-setup.png" 
             onClick={handleOpenProjects} 
         />
         
+        {/* <--- 3. UPDATED RESUME ICON CLICK --- */}
         <DesktopIcon 
             label="My Resume" 
             iconSrc="https://img.icons8.com/color/48/pdf-2--v1.png" 
-            onClick={() => console.log("Open Resume")} 
+            onClick={handleOpenResume} 
         />
         
         <DesktopIcon 
@@ -133,12 +142,12 @@ const Desktop = () => {
         />
 
           <DesktopIcon 
-  label="Calculator" 
-  iconSrc="https://img.icons8.com/fluency/48/calculator.png" 
-  onClick={handleOpenCalculator} 
-/>
+            label="Calculator" 
+            iconSrc="https://img.icons8.com/fluency/48/calculator.png" 
+            onClick={handleOpenCalculator} 
+            />
+            
       </div>
-      
 
       {/* 4. WINDOWS RENDERING LAYER */}
       {windows.map((win) => (
@@ -153,7 +162,6 @@ const Desktop = () => {
         onStartClick={toggleStartMenu} 
         onExplorerClick={handleOpenExplorer}
         onChromeClick={handleOpenChrome}
-        // Agar Taskbar me bhi Projects ka icon chahiye to yahan prop pass kar dena
       />
 
     </div>

@@ -1,0 +1,192 @@
+/* src/styles/PdfViewer.css */
+
+.pdf-app-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  background: #121212; /* Deep Dark Background */
+  color: #e0e0e0;
+  font-family: 'Segoe UI', sans-serif;
+  overflow: hidden;
+}
+
+/* --- TOOLBAR --- */
+.pdf-toolbar {
+  height: 56px;
+  background: #2b2b2b; /* Matches your image header */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 15px;
+  border-bottom: 1px solid #1a1a1a;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+  z-index: 10;
+}
+
+.toolbar-section {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Center Pill Design */
+.glass-pill {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 4px 10px;
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.pdf-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 10px;
+}
+
+.pdf-name {
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: #fff;
+}
+
+.pdf-meta {
+  font-size: 0.7rem;
+  color: #aaa;
+}
+
+.icon-btn {
+  background: transparent;
+  border: none;
+  color: #b0b0b0;
+  padding: 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.icon-btn:hover, .icon-btn.active {
+  background: rgba(255, 255, 255, 0.1);
+  color: #fff;
+}
+
+.zoom-display {
+  font-size: 0.85rem;
+  min-width: 45px;
+  text-align: center;
+  font-variant-numeric: tabular-nums;
+}
+
+/* --- MAIN BODY --- */
+.pdf-body {
+  flex: 1;
+  display: flex;
+  overflow: hidden;
+  background: #525659; /* Standard PDF Grey Background */
+}
+
+/* --- SIDEBAR (The crazy part) --- */
+.pdf-sidebar {
+  width: 0;
+  background: #1e1e1e; /* Darker Sidebar */
+  border-right: 1px solid #000;
+  transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.pdf-sidebar.open {
+  width: 220px; /* Sidebar Width */
+}
+
+.sidebar-header {
+  padding: 15px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  color: #888;
+  letter-spacing: 1px;
+}
+
+.thumbnail-item {
+  padding: 15px;
+  cursor: pointer;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  border-left: 3px solid transparent;
+}
+
+.thumbnail-item:hover {
+  background: rgba(255,255,255,0.05);
+}
+
+.thumbnail-item.active {
+  background: rgba(255,255,255,0.08);
+  border-left-color: #00f3ff; /* Neon Accent */
+}
+
+.thumbnail-item span {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+/* Fake Document Preview in Sidebar */
+.thumb-preview {
+  width: 80px;
+  height: 110px;
+  background: white;
+  border-radius: 2px;
+  padding: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  opacity: 0.8;
+  box-shadow: 0 2px 5px rgba(0,0,0,0.5);
+}
+
+.fake-lines {
+  height: 4px;
+  background: #ddd;
+  width: 100%;
+  border-radius: 2px;
+}
+.fake-lines.short { width: 60%; }
+
+/* --- VIEWER AREA --- */
+.pdf-viewport {
+  flex: 1;
+  overflow: auto; /* Allow scrolling */
+  display: flex;
+  justify-content: center;
+  padding: 30px;
+  position: relative;
+}
+
+.pdf-content-wrapper {
+  height: 100%; /* Default tall */
+  background: white; /* PDF Page Background */
+  box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+  transition: all 0.3s ease;
+  min-height: 800px; /* Force height for scrolling */
+}
+
+.pdf-frame {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+}
+
+/* Scrollbar Styling for Sidebar */
+.pdf-sidebar::-webkit-scrollbar {
+  width: 6px;
+}
+.pdf-sidebar::-webkit-scrollbar-thumb {
+  background: #444;
+  border-radius: 3px;
+}
