@@ -15,6 +15,7 @@ import PdfViewer from "../apps/PdfViewer";
 import Notepad from "../apps/Notepad";
 import Terminal from "../apps/Terminal";
 import WindowsMediaPlayer from "../apps/WindowsMediaPlayer";
+import Paint from "../apps/Paint";
 
 // --- Deep Dive Components ---
 import ProjectDive from "../apps/ProjectDive";
@@ -35,6 +36,15 @@ const Desktop = () => {
   const handleDiveIn = (projectId) => {
     const project = projectData.find((p) => p.id === projectId);
     setActiveProjectDive(project);
+  };
+  const handleOpenPaint = () => {
+    openApp(
+      "paint", // ID
+      "CyberPaint Studio", // Title
+      "https://img.icons8.com/fluency/48/paint-palette.png", // Icon
+      <Paint />, // Component
+      { width: 900, height: 700 } // <--- Size thoda bada rakha hai
+    );
   };
 
   const handleCloseDive = () => {
@@ -224,6 +234,8 @@ const Desktop = () => {
         onExplorerClick={handleOpenExplorer}
         onChromeClick={handleOpenChrome}
         onNotepadClick={handleOpenNotepad}
+        onPaintClick={handleOpenPaint}
+
       />
     </div>
   );

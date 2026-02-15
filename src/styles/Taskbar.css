@@ -1,4 +1,4 @@
-/* Container same as before */
+/* Container */
 .taskbar {
   position: fixed;
   bottom: 0;
@@ -8,10 +8,10 @@
   background: rgba(32, 32, 32, 0.95); 
   border-top: 1px solid rgba(255, 255, 255, 0.08);
   display: flex;
-  
   align-items: center;
   padding: 0 10px;
   z-index: 9999;
+  user-select: none; /* Prevent text selection */
 }
 
 /* Center Icons Group */
@@ -19,7 +19,6 @@
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
-  
   display: flex;
   gap: 5px;
   height: 100%;
@@ -35,7 +34,7 @@
   border-radius: 4px;
   cursor: pointer;
   transition: all 0.2s;
-  position: relative; /* Zaroori hai dot ke liye */
+  position: relative; 
 }
 
 .tb-icon:hover {
@@ -47,15 +46,16 @@
   width: 24px;
   height: 24px;
   transition: 0.1s;
+  object-fit: contain;
 }
 
 .tb-icon:active img {
   transform: scale(0.9);
 }
 
-/* --- LOGIC STYLES START --- */
+/* --- ACTIVE STATE INDICATORS --- */
 
-/* App Open hai (Dot indicator) */
+/* App is Open (Small grey dot) */
 .tb-icon.open::after {
   content: '';
   position: absolute;
@@ -64,22 +64,21 @@
   height: 3px;
   background-color: #888;
   border-radius: 2px;
-  transition: width 0.2s;
+  transition: width 0.2s, background-color 0.2s;
 }
 
-/* App Active hai (Focus + Long Blue Line) */
+/* App is Active/Focused (Wide blue line) */
 .tb-icon.active {
   background-color: rgba(255, 255, 255, 0.08);
 }
 
 .tb-icon.active::after {
   background-color: #00d8ff; /* Windows Blue */
-  width: 16px; /* Dot lamba ho jayega */
+  width: 16px; 
+  box-shadow: 0 0 4px #00d8ff; /* Subtle Glow */
 }
 
-/* --- LOGIC STYLES END --- */
-
-/* System Tray (Right) - Same as before */
+/* --- SYSTEM TRAY --- */
 .system-tray {
   margin-left: auto;
   display: flex;
@@ -88,10 +87,10 @@
   color: white;
 }
 
-
 .tray-icon {
   font-size: 16px;
   opacity: 0.8;
+  cursor: pointer;
 }
 
 .clock {
@@ -102,12 +101,12 @@
   justify-content: center;
   cursor: default;
   white-space: nowrap;
+  padding: 0 5px;
 }
 
 .clock:hover {
   background-color: rgba(255,255,255,0.1);
   border-radius: 4px;
-  padding: 2px 5px;
 }
 
 @media (max-width: 600px) {
