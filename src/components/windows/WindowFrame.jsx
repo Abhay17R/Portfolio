@@ -1,40 +1,74 @@
-"use client";
-import React, { useState } from "react";
+import React from "react";
 import Draggable from "react-draggable";
-import { X, Minus, Square } from "lucide-react"; // Icons ke liye lucide-react use kar lena
+import { X, Minus, Square } from "lucide-react";
 import { useOS } from "@/context/OSContext";
+import "@/styles/WindowFrame.css"; // Ensure this path is correct
 
-const WindowFrame = ({ title, children, onClose, isOpen, icon }) => {
-  const { osMode } = useOS();
-  
-  // Chaos Mode Effect: Agar chaos on hai, to window thoda shake karegi
-  const chaosStyle = osMode === "chaos" ? "animate-pulse border-red-500 border-2" : "border-gray-700";
+const WindowFrame = ({ app, children }) => {
+  const { closeApp, toggleMinimize, focusWindow, activeWindowId, osMode } = useOS();
 
-  if (!isOpen) return null;
+  // Check if this specific window is currently active (on top)
+  const isActive = activeWindowId === app.id;
+
+  // Chaos Mode Effect
+  const chaosClass = osMode === "chaos" ? "animate-pulse border-red-500" : "";
 
   return (
-    <Draggable handle=".window-header" bounds="parent">
+    <Draggable
+      handle=".window-header" // Only drag when holding the header
+      bounds="parent"         // Cannot drag outside the screen
+      onMouseDown={() => focusWindow(app.id)} // Click anywhere on window to bring to front
+    >
       <div 
-        className={`absolute top-10 left-10 w-[600px] bg-[#1c1c1c] rounded-lg shadow-2xl overflow-hidden flex flex-col text-white ${chaosStyle}`}
-        style={{ zIndex: 50 }}
+        // We use the CSS class 'os-window-frame' for structure, and dynamic classes for state
+        className={`os-window-frame ${isActive ? "active" : ""} ${chaosClass}`}
+        style={{ 
+          // LOGIC: If active, zIndex is 500. If not, 10. Icons are usually 1.
+          zIndex: isActive ? 500 : 10, 
+          display: app.isMinimized ? "none" : "flex",
+          width: app.size?.width || 600,
+          height: app.size?.height || 400,
+          position: "absolute" // Required for Draggable
+        }}
+        onClick={() => focusWindow(app.id)}
       >
-        {/* Title Bar */}
-        <div className="window-header h-10 bg-[#2d2d2d] flex items-center justify-between px-3 cursor-pointer select-none border-b border-gray-700">
-          <div className="flex items-center gap-2">
-            {icon && <span className="text-lg">{icon}</span>}
-            <span className="text-sm font-medium tracking-wide">{title}</span>
+        {/* --- Header Section --- */}
+        <div className="window-header">
+          <div className="title-section">
+            {/* Render Icon (Image or Component) */}
+            {typeof app.icon === 'string' ? (
+                <img src={app.icon} alt="icon" style={{width: 16, height: 16}} />
+            ) : (
+                <span className="text-blue-400">{app.icon}</span>
+            )}
+            <span>{app.title}</span>
           </div>
-          <div className="flex items-center gap-4">
-            <Minus size={16} className="hover:text-yellow-400 cursor-pointer" />
-            <Square size={14} className="hover:text-blue-400 cursor-pointer" />
-            <X size={18} className="hover:text-red-500 cursor-pointer" onClick={onClose} />
+
+          <div className="controls-section">
+            <button onClick={(e) => { e.stopPropagation(); toggleMinimize(app.id); }}>
+              <Minus size={14} />
+            </button>
+            <button onClick={(e) => e.stopPropagation()}>
+              <Square size={12} />
+            </button>
+            <button 
+              className="close-btn" 
+              onClick={(e) => { e.stopPropagation(); closeApp(app.id); }}
+            >
+              <X size={14} />
+            </button>
           </div>
         </div>
 
-        {/* Content Area */}
-        <div className="flex-1 bg-black/90 p-1 overflow-auto h-[400px]">
+        {/* --- Content Section --- */}
+        <div className="window-content">
           {children}
         </div>
+        
+        {/* Resizers (Optional - keeps layout safe) */}
+        <div className="resizer r-bottom"></div>
+        <div className="resizer r-right"></div>
+        <div className="resizer r-br"></div>
       </div>
     </Draggable>
   );

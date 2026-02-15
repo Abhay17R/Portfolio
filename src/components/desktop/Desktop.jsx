@@ -139,6 +139,18 @@ const Desktop = () => {
   const handleDesktopClick = () => {
     if (startMenuOpen) setStartMenuOpen(false);
   };
+  const allApps = [
+    { id: "explorer", name: "File Explorer", icon: "https://img.icons8.com/fluency/48/folder-invoices--v1.png", action: handleOpenExplorer },
+    { id: "chrome", name: "Google Chrome", icon: "https://img.icons8.com/color/48/chrome--v1.png", action: handleOpenChrome },
+    { id: "notepad", name: "CyberPad", icon: "https://img.icons8.com/fluency/48/code-file.png", action: handleOpenNotepad },
+    { id: "paint", name: "CyberPaint Studio", icon: "https://img.icons8.com/fluency/48/paint-palette.png", action: handleOpenPaint },
+    { id: "media", name: "Media Player", icon: "https://img.icons8.com/fluency/48/video-playlist.png", action: handleOpenMediaPlayer },
+    { id: "terminal", name: "Terminal", icon: "https://img.icons8.com/color/48/console.png", action: handleOpenTerminal },
+    { id: "calculator", name: "Calculator", icon: "https://img.icons8.com/fluency/48/calculator.png", action: handleOpenCalculator },
+    { id: "projects", name: "My Projects", icon: "https://img.icons8.com/color/48/project-setup.png", action: handleOpenProjects },
+    { id: "resume", name: "My Resume", icon: "https://img.icons8.com/color/48/pdf-2--v1.png", action: handleOpenResume },
+    { id: "settings", name: "Settings", icon: "https://img.icons8.com/fluency/48/settings.png", action: () => console.log("Settings Coming Soon") },
+  ];
 
   // Chaos Mode Effect
   useEffect(() => {
@@ -226,7 +238,11 @@ const Desktop = () => {
       ))}
 
       {/* 6. START MENU */}
-      <StartMenu isOpen={startMenuOpen} />
+      <StartMenu 
+        isOpen={startMenuOpen} 
+        apps={allApps}  // <-- Ye nayi list pass ki
+        onClose={() => toggleStartMenu(false)} // App click hone pe menu band ho
+      />
 
       {/* 7. TASKBAR */}
       <Taskbar

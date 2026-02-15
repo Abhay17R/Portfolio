@@ -79,7 +79,7 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick, onNotepadClick 
   // Or simply render ALL running apps dynamically if you prefer a pure dock style.
   // Let's stick to your structure: Static Launchers -> Dynamic Apps.
   
-  const staticAppIds = ["explorer", "chrome", "notepad"];
+  const staticAppIds = ["explorer", "chrome", "notepad","paint"];
   const dynamicWindows = windows.filter(w => !staticAppIds.includes(w.id));
 
   return (

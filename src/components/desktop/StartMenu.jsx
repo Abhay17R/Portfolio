@@ -1,60 +1,84 @@
-import React from "react";
-import "@/styles/StartMenu.css"; // Iska CSS niche step 4 me hai
+"use client";
+import React, { useState, useMemo } from "react";
+import "@/styles/StartMenu.css";
 
-const StartMenu = ({ isOpen }) => {
+const StartMenu = ({ isOpen, apps = [], onClose }) => {
+  const [searchTerm, setSearchTerm] = useState("");
+
+  // Search Logic: Apps ko filter karne ke liye
+  const filteredApps = useMemo(() => {
+    if (!searchTerm) return apps;
+    return apps.filter((app) =>
+      app.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+  }, [apps, searchTerm]);
+
   if (!isOpen) return null;
-
-  const pinnedApps = [
-    { name: "Terminal", icon: "https://img.icons8.com/color/48/console.png", action: () => console.log("Open Terminal") },
-    { name: "Projects", icon: "https://img.icons8.com/color/48/project-setup.png", action: () => console.log("Open Projects") },
-    { name: "Resume", icon: "https://img.icons8.com/color/48/pdf-2--v1.png", action: () => console.log("Open Resume") },
-    { name: "Chrome", icon: "https://img.icons8.com/color/48/chrome--v1.png", action: () => console.log("Open Browser") },
-    { name: "VS Code", icon: "https://img.icons8.com/color/48/visual-studio-code-2019.png", action: () => console.log("Open Code") },
-    { name: "Settings", icon: "https://img.icons8.com/color/48/settings--v1.png", action: () => console.log("Open Settings") },
-  ];
 
   return (
     <div className="start-menu-container" onClick={(e) => e.stopPropagation()}>
       
-      {/* Search Bar */}
+      {/* Search Bar: Input change par searchTerm update hoga */}
       <div className="start-search-box">
-        <input type="text" placeholder="Search for apps, settings, and documents" />
+        <input 
+          type="text" 
+          placeholder="Search for apps, settings, and documents" 
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          autoFocus
+        />
       </div>
 
-      {/* Pinned Section */}
+      {/* Pinned Section: Yahan dynamic apps render ho rahi hain */}
       <div className="start-pinned-area">
         <div className="section-title">
-            <span>Pinned</span>
-            <button>All apps &gt;</button>
+          <span>{searchTerm ? "Search Results" : "Pinned"}</span>
+          <button>All apps &gt;</button>
         </div>
+        
         <div className="apps-grid">
-            {pinnedApps.map((app, index) => (
-                <div key={index} className="app-item" onClick={app.action}>
-                    <img src={app.icon} alt={app.name} />
-                    <span>{app.name}</span>
-                </div>
-            ))}
+          {filteredApps.length > 0 ? (
+            filteredApps.map((app, index) => (
+              <div 
+                key={app.id || index} 
+                className="app-item" 
+                onClick={() => {
+                  app.action(); // App open handler
+                  onClose();    // Start menu band karne ke liye
+                }}
+              >
+                <img src={app.icon} alt={app.name} />
+                <span>{app.name}</span>
+              </div>
+            ))
+          ) : (
+            <div style={{ color: "#888", padding: "20px", fontSize: "12px" }}>
+              No apps found.
+            </div>
+          )}
         </div>
       </div>
 
-      {/* Recommended Section (Optional Placeholder) */}
+      {/* Recommended Section: Placeholder files */}
       <div className="start-recommended-area">
         <div className="section-title">
-            <span>Recommended</span>
+          <span>Recommended</span>
         </div>
         <div className="rec-item">
-            <span style={{fontSize: '12px', color: '#ccc'}}>No recent files</span>
+          <span style={{ fontSize: "12px", color: "#ccc" }}>
+            No recent files
+          </span>
         </div>
       </div>
 
-      {/* Bottom User Profile Bar */}
+      {/* Footer: Profile aur Power button */}
       <div className="start-footer">
         <div className="user-profile">
-            <img src="https://i.postimg.cc/cLbyKrVB/image.png" alt="Profile" />
-            <span>Abhay Kumar Jha</span>
+          <img src="https://i.postimg.cc/cLbyKrVB/image.png" alt="Profile" />
+          <span>Abhay Kumar Jha</span>
         </div>
-        <div className="power-btn">
-            <img src="https://img.icons8.com/ios-glyphs/30/ffffff/shutdown.png" alt="Power" />
+        <div className="power-btn" onClick={() => window.location.reload()}>
+          <img src="https://img.icons8.com/ios-glyphs/30/ffffff/shutdown.png" alt="Power" />
         </div>
       </div>
     </div>
