@@ -1,0 +1,157 @@
+/* src/styles/StartMenu.css */
+
+.start-menu-container {
+    position: absolute;
+    bottom: 60px; 
+    left: 50%;
+    transform: translateX(-50%);
+    
+    /* UPDATED: Responsive Width/Height */
+    width: min(600px, 95vw); /* Max 600px, par screen chhoti ho toh 95% */
+    height: min(650px, 85vh); /* Max 650px, par screen se bada nahi hoga */
+    
+    background-color: rgba(32, 32, 32, 0.85);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-radius: 8px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+    padding: 24px;
+    z-index: 1000;
+    animation: slideUp 0.25s ease-out;
+    overflow: hidden; /* Content bahar na nikle */
+}
+
+@keyframes slideUp {
+    from { opacity: 0; transform: translate(-50%, 20px); }
+    to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* Search Bar */
+.start-search-box input {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 4px;
+    background: #1f1f1f;
+    border: 1px solid #333;
+    border-bottom: 2px solid #0078d4;
+    color: white;
+    outline: none;
+    margin-bottom: 20px;
+}
+
+/* Titles */
+.section-title {
+    display: flex;
+    justify-content: space-between;
+    font-size: 13px;
+    font-weight: 600;
+    color: white;
+    margin-bottom: 15px;
+    padding: 0 5px;
+}
+
+.section-title button {
+    background: none;
+    border: none;
+    color: #ccc;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+/* Apps Grid - UPDATED FOR RESIZE */
+.apps-grid {
+    display: grid;
+    /* Auto-fit: Jitne icon fit honge utne dikhenge, baki niche ayenge */
+    grid-template-columns: repeat(auto-fit, minmax(70px, 1fr));
+    gap: 15px;
+    margin-bottom: 30px;
+    overflow-y: auto; /* Scroll agar icons jyada ho */
+    padding: 2px; /* Scrollbar space */
+}
+
+.app-item {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    padding: 10px;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.app-item:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.app-item img {
+    width: 32px;
+    height: 32px;
+}
+
+.app-item span {
+    color: white;
+    font-size: 11px;
+    text-align: center;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 100%;
+}
+
+/* Recommended Area */
+.start-recommended-area {
+    flex-grow: 1;
+    overflow-y: auto;
+}
+
+.rec-item {
+    padding: 10px;
+}
+
+/* Footer */
+.start-footer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: rgba(0,0,0,0.2);
+    /* Negative margins to stick to bottom corners */
+    margin-top: auto; 
+    margin-left: -24px;
+    margin-right: -24px;
+    margin-bottom: -24px;
+    padding: 15px 40px;
+}
+
+.user-profile {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+    padding: 5px 10px;
+    border-radius: 4px;
+}
+.user-profile:hover, .power-btn:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.user-profile img {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+}
+
+.power-btn {
+    padding: 8px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.power-btn img {
+    width: 20px;
+    height: 20px;
+}

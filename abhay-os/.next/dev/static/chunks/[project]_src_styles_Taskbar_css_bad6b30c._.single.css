@@ -1,0 +1,87 @@
+/* [project]/src/styles/Taskbar.css [app-client] (css) */
+.taskbar {
+  z-index: 9999;
+  background: #202020f2;
+  border-top: 1px solid #ffffff14;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  height: 48px;
+  padding: 0 15px;
+  display: flex;
+  position: fixed;
+  bottom: 0;
+  left: 0;
+}
+
+.taskbar-center {
+  align-items: center;
+  gap: 8px;
+  height: 100%;
+  display: flex;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.tb-icon {
+  cursor: pointer;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+  width: 40px;
+  height: 40px;
+  transition: all .2s;
+  display: flex;
+  position: relative;
+}
+
+.tb-icon:hover {
+  background-color: #ffffff1a;
+  transform: translateY(-2px);
+}
+
+.tb-icon img {
+  width: 24px;
+  height: 24px;
+}
+
+.tb-icon.active:after {
+  content: "";
+  background-color: #0078d4;
+  border-radius: 2px;
+  width: 12px;
+  height: 3px;
+  position: absolute;
+  bottom: 0;
+}
+
+.system-tray {
+  color: #fff;
+  align-items: center;
+  gap: 15px;
+  margin-left: auto;
+  display: flex;
+}
+
+.tray-icon {
+  opacity: .8;
+  font-size: 16px;
+}
+
+.clock {
+  text-align: right;
+  cursor: default;
+  flex-direction: column;
+  justify-content: center;
+  font-size: 12px;
+  display: flex;
+}
+
+.clock:hover {
+  background-color: #ffffff1a;
+  border-radius: 4px;
+  padding: 2px 5px;
+}
+
+/*# sourceMappingURL=%5Bproject%5D_src_styles_Taskbar_css_bad6b30c._.single.css.map*/

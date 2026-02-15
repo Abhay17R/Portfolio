@@ -1,0 +1,111 @@
+/* src/styles/Desktop.css */
+
+/* --- 1. Main Container --- */
+.desktop-container {
+  width: 100vw;
+  height: 100vh;
+  position: relative;
+  overflow: hidden;
+  background-color: #000;
+  font-family: 'Segoe UI', sans-serif;
+  user-select: none;
+}
+
+/* --- 2. Wallpaper Layer --- */
+
+.wallpaper-layer {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  
+  /* CHANGE 1: Force fit to screen (Stretch) */
+  background-size: 90% 100%; 
+  background-repeat: no-repeat;
+  background-position: center;
+
+  /* Optional: Thoda dark overlay taaki icons clear dikhe */
+  background-color: #000; 
+  transition: all 0.5s ease;
+}
+
+/* --- 3. Hero Text (Background Name) --- */
+.hero-text-container {
+  position: absolute;
+  top: 80%; 
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1;
+  pointer-events: none; /* Click pass-through */
+  text-align: center;
+  width: 100%;
+}
+
+.hero-name {
+  /* Responsive Font Size: Screen chhota hone par font chhota hoga */
+  font-size: clamp(3rem, 8vw, 6rem); 
+  font-weight: 800;
+  text-transform: capitalize;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(255, 255, 255, 0.3);
+  letter-spacing: 4px;
+  font-family: 'Segoe UI', sans-serif;
+  filter: drop-shadow(0 0 10px rgba(0,0,0,0.8));
+}
+
+/* --- 4. Desktop Icons Grid (Left Side) - UPDATED FOR RESIZE --- */
+.icons-grid {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+  /* Taskbar ki height (approx 50px) minus karke height fix ki */
+  height: calc(100vh - 70px); 
+  width: auto;
+  
+  display: flex;
+  flex-direction: column; /* Start vertical */
+  flex-wrap: wrap; /* AGAR JAGAH NA HO TO NEXT COLUMN ME JAO */
+  align-content: flex-start; /* Columns left side chipke rahenge */
+  
+  gap: 15px; /* Spacing thoda adjust kiya fit hone ke liye */
+  z-index: 10;
+}
+
+.desktop-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 90px;
+  cursor: pointer;
+  padding: 5px;
+  border-radius: 4px;
+  transition: background 0.2s;
+}
+
+.desktop-icon:hover {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+.icon-img {
+  width: 48px;
+  height: 48px;
+  margin-bottom: 5px;
+  filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); 
+}
+
+.icon-label {
+  color: white;
+  font-size: 13px;
+  text-align: center;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.9);
+  line-height: 1.2;
+}
+
+/* Mobile View Adjustments */
+@media (max-width: 600px) {
+  .icons-grid {
+    flex-direction: row; /* Mobile pe horizontal achha lagta hai */
+    height: auto;
+    width: 100%;
+    padding-right: 20px;
+  }
+}
