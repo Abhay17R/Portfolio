@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import { useOS } from "@/context/OSContext";
 import "@/styles/Taskbar.css";
 
-const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick, onNotepadClick ,onPaintClick}) => {
+const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick, onNotepadClick ,onPaintClick,onSettingsClick}) => {
   const { osMode, windows, activeWindowId, focusWindow, toggleMinimize } = useOS();
   const [time, setTime] = useState(new Date());
   const [chaosStyle, setChaosStyle] = useState({});
@@ -79,7 +79,7 @@ const Taskbar = ({ onStartClick, onExplorerClick, onChromeClick, onNotepadClick 
   // Or simply render ALL running apps dynamically if you prefer a pure dock style.
   // Let's stick to your structure: Static Launchers -> Dynamic Apps.
   
-  const staticAppIds = ["explorer", "chrome", "notepad","paint"];
+  const staticAppIds = ["explorer", "chrome", "notepad","paint","settings"];
   const dynamicWindows = windows.filter(w => !staticAppIds.includes(w.id));
 
   return (

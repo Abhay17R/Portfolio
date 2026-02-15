@@ -16,12 +16,16 @@ import Notepad from "../apps/Notepad";
 import Terminal from "../apps/Terminal";
 import WindowsMediaPlayer from "../apps/WindowsMediaPlayer";
 import Paint from "../apps/Paint";
+import Settings from "../apps/Settings";
+import { appRegistry } from "../apps/appRegistry";
 
 // --- Deep Dive Components ---
 import ProjectDive from "../apps/ProjectDive";
 import { projectData } from "@/data/projectList"; // Data for dive
 
 import "@/styles/Desktop.css";
+
+ 
 
 const Desktop = () => {
   const { osMode, windows, openApp } = useOS();
@@ -118,6 +122,15 @@ const Desktop = () => {
       { width: 350, height: 520 }
     );
   };
+  const handleOpenSettings = () => {
+  openApp(
+    "settings", 
+    "System Settings", 
+    "https://img.icons8.com/fluency/48/settings.png", 
+    <Settings />, 
+    { width: 850, height: 600 }
+  );
+};
 
   const handleOpenResume = () => {
     openApp(
@@ -149,7 +162,8 @@ const Desktop = () => {
     { id: "calculator", name: "Calculator", icon: "https://img.icons8.com/fluency/48/calculator.png", action: handleOpenCalculator },
     { id: "projects", name: "My Projects", icon: "https://img.icons8.com/color/48/project-setup.png", action: handleOpenProjects },
     { id: "resume", name: "My Resume", icon: "https://img.icons8.com/color/48/pdf-2--v1.png", action: handleOpenResume },
-    { id: "settings", name: "Settings", icon: "https://img.icons8.com/fluency/48/settings.png", action: () => console.log("Settings Coming Soon") },
+    { id: "settings", name: "Settings", icon: "https://img.icons8.com/fluency/48/settings.png", action: handleOpenSettings },
+    
   ];
 
   // Chaos Mode Effect
@@ -234,7 +248,10 @@ const Desktop = () => {
 
       {/* 5. WINDOWS RENDERING LAYER */}
       {windows.map((win) => (
-        <WindowFrame key={win.id} windowData={win} />
+        <WindowFrame key={win.id} windowData={win}>
+          
+          {win.component}
+        </WindowFrame>
       ))}
 
       {/* 6. START MENU */}
@@ -251,6 +268,7 @@ const Desktop = () => {
         onChromeClick={handleOpenChrome}
         onNotepadClick={handleOpenNotepad}
         onPaintClick={handleOpenPaint}
+        onSettingsClick={handleOpenSettings}
 
       />
     </div>
