@@ -3331,10 +3331,33 @@ const Paint = ()=>{
         tool,
         neonMode
     ]);
+    (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$index$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["useEffect"])({
+        "Paint.useEffect": ()=>{
+            const resizeCanvas = {
+                "Paint.useEffect.resizeCanvas": ()=>{
+                    const canvas = canvasRef.current;
+                    const ctx = ctxRef.current;
+                    if (!canvas || !ctx) return;
+                    const imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+                    canvas.width = canvas.parentElement.clientWidth;
+                    canvas.height = canvas.parentElement.clientHeight;
+                    ctx.putImageData(imageData, 0, 0);
+                }
+            }["Paint.useEffect.resizeCanvas"];
+            window.addEventListener("resize", resizeCanvas);
+            return ({
+                "Paint.useEffect": ()=>window.removeEventListener("resize", resizeCanvas)
+            })["Paint.useEffect"];
+        }
+    }["Paint.useEffect"], []);
     // --- DRAWING FUNCTIONS ---
     // 1. START DRAWING UPDATE
     const startDrawing = ({ nativeEvent })=>{
-        const { offsetX, offsetY } = nativeEvent;
+        const rect = canvasRef.current.getBoundingClientRect();
+        const scaleX = canvasRef.current.width / rect.width;
+        const scaleY = canvasRef.current.height / rect.height;
+        const offsetX = (nativeEvent.clientX - rect.left) * scaleX;
+        const offsetY = (nativeEvent.clientY - rect.top) * scaleY;
         setIsDrawing(true);
         setStartPos({
             x: offsetX,
@@ -3348,7 +3371,11 @@ const Paint = ()=>{
     // 2. DRAW UPDATE
     const draw = ({ nativeEvent })=>{
         if (!isDrawing) return;
-        const { offsetX, offsetY } = nativeEvent;
+        const rect = canvasRef.current.getBoundingClientRect();
+        const scaleX = canvasRef.current.width / rect.width;
+        const scaleY = canvasRef.current.height / rect.height;
+        const offsetX = (nativeEvent.clientX - rect.left) * scaleX;
+        const offsetY = (nativeEvent.clientY - rect.top) * scaleY;
         const ctx = ctxRef.current;
         if (tool === 'brush' || tool === 'eraser') {
             // Normal Drawing
@@ -3403,8 +3430,8 @@ const Paint = ()=>{
                         children: "TOOLS"
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 133,
-                        columnNumber: 9
+                        lineNumber: 164,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         className: `paint-btn ${tool === 'brush' ? 'active' : ''}`,
@@ -3414,13 +3441,13 @@ const Paint = ()=>{
                             size: 20
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 141,
-                            columnNumber: 11
+                            lineNumber: 172,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 136,
-                        columnNumber: 9
+                        lineNumber: 167,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         className: `paint-btn ${tool === 'eraser' ? 'active' : ''}`,
@@ -3430,20 +3457,20 @@ const Paint = ()=>{
                             size: 20
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 150,
-                            columnNumber: 11
+                            lineNumber: 181,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 145,
-                        columnNumber: 9
+                        lineNumber: 176,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "divider"
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 153,
-                        columnNumber: 9
+                        lineNumber: 184,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         className: `paint-btn ${tool === 'rect' ? 'active' : ''}`,
@@ -3453,13 +3480,13 @@ const Paint = ()=>{
                             size: 18
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 160,
-                            columnNumber: 11
+                            lineNumber: 191,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 156,
-                        columnNumber: 9
+                        lineNumber: 187,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         className: `paint-btn ${tool === 'circle' ? 'active' : ''}`,
@@ -3469,13 +3496,13 @@ const Paint = ()=>{
                             size: 18
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 166,
-                            columnNumber: 11
+                            lineNumber: 197,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 162,
-                        columnNumber: 9
+                        lineNumber: 193,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         className: `paint-btn ${tool === 'triangle' ? 'active' : ''}`,
@@ -3485,20 +3512,20 @@ const Paint = ()=>{
                             size: 18
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 172,
-                            columnNumber: 11
+                            lineNumber: 203,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 168,
-                        columnNumber: 9
+                        lineNumber: 199,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "divider"
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 175,
-                        columnNumber: 9
+                        lineNumber: 206,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "size-control",
@@ -3509,21 +3536,21 @@ const Paint = ()=>{
                                     size: 14
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/apps/Paint.jsx",
-                                    lineNumber: 179,
-                                    columnNumber: 73
+                                    lineNumber: 210,
+                                    columnNumber: 75
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/Paint.jsx",
-                                lineNumber: 179,
-                                columnNumber: 11
+                                lineNumber: 210,
+                                columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("span", {
                                 className: "size-display",
                                 children: brushSize
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/Paint.jsx",
-                                lineNumber: 180,
-                                columnNumber: 11
+                                lineNumber: 211,
+                                columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0)),
                             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                                 onClick: ()=>setBrushSize((s)=>Math.min(50, s + 2)),
@@ -3531,26 +3558,26 @@ const Paint = ()=>{
                                     size: 14
                                 }, void 0, false, {
                                     fileName: "[project]/src/components/apps/Paint.jsx",
-                                    lineNumber: 181,
-                                    columnNumber: 74
+                                    lineNumber: 212,
+                                    columnNumber: 76
                                 }, ("TURBOPACK compile-time value", void 0))
                             }, void 0, false, {
                                 fileName: "[project]/src/components/apps/Paint.jsx",
-                                lineNumber: 181,
-                                columnNumber: 11
+                                lineNumber: 212,
+                                columnNumber: 13
                             }, ("TURBOPACK compile-time value", void 0))
                         ]
                     }, void 0, true, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 178,
-                        columnNumber: 9
+                        lineNumber: 209,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "divider"
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 184,
-                        columnNumber: 9
+                        lineNumber: 215,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         className: `paint-btn ${neonMode ? 'active-neon' : ''}`,
@@ -3560,13 +3587,13 @@ const Paint = ()=>{
                             size: 20
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 192,
-                            columnNumber: 11
+                            lineNumber: 223,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 187,
-                        columnNumber: 9
+                        lineNumber: 218,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         className: `paint-btn ${showGrid ? 'active' : ''}`,
@@ -3576,20 +3603,20 @@ const Paint = ()=>{
                             size: 20
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 200,
-                            columnNumber: 11
+                            lineNumber: 231,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 195,
-                        columnNumber: 9
+                        lineNumber: 226,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "divider"
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 203,
-                        columnNumber: 9
+                        lineNumber: 234,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         className: "paint-btn danger",
@@ -3599,13 +3626,13 @@ const Paint = ()=>{
                             size: 20
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 207,
-                            columnNumber: 11
+                            lineNumber: 238,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 206,
-                        columnNumber: 9
+                        lineNumber: 237,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("button", {
                         className: "paint-btn success",
@@ -3615,19 +3642,19 @@ const Paint = ()=>{
                             size: 20
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 211,
-                            columnNumber: 11
+                            lineNumber: 242,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 210,
-                        columnNumber: 9
+                        lineNumber: 241,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/apps/Paint.jsx",
-                lineNumber: 132,
-                columnNumber: 7
+                lineNumber: 163,
+                columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "canvas-wrapper",
@@ -3636,8 +3663,8 @@ const Paint = ()=>{
                         className: "cyber-grid-overlay"
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 217,
-                        columnNumber: 22
+                        lineNumber: 248,
+                        columnNumber: 24
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("canvas", {
                         ref: canvasRef,
@@ -3648,14 +3675,14 @@ const Paint = ()=>{
                         className: "cyber-canvas"
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 218,
-                        columnNumber: 9
+                        lineNumber: 249,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/apps/Paint.jsx",
-                lineNumber: 216,
-                columnNumber: 7
+                lineNumber: 247,
+                columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0)),
             /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                 className: "paint-palette",
@@ -3665,8 +3692,8 @@ const Paint = ()=>{
                         children: "PIGMENTS:"
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 230,
-                        columnNumber: 9
+                        lineNumber: 261,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     /*#__PURE__*/ (0, __TURBOPACK__imported__module__$5b$project$5d2f$abhay$2d$os$2f$node_modules$2f$next$2f$dist$2f$compiled$2f$react$2f$jsx$2d$dev$2d$runtime$2e$js__$5b$app$2d$client$5d$__$28$ecmascript$29$__["jsxDEV"])("div", {
                         className: "color-wrapper",
@@ -3677,13 +3704,13 @@ const Paint = ()=>{
                             className: "color-picker-input"
                         }, void 0, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 234,
-                            columnNumber: 12
+                            lineNumber: 265,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0))
                     }, void 0, false, {
                         fileName: "[project]/src/components/apps/Paint.jsx",
-                        lineNumber: 233,
-                        columnNumber: 9
+                        lineNumber: 264,
+                        columnNumber: 11
                     }, ("TURBOPACK compile-time value", void 0)),
                     [
                         '#00f3ff',
@@ -3704,23 +3731,23 @@ const Paint = ()=>{
                             }
                         }, c, false, {
                             fileName: "[project]/src/components/apps/Paint.jsx",
-                            lineNumber: 244,
-                            columnNumber: 11
+                            lineNumber: 275,
+                            columnNumber: 13
                         }, ("TURBOPACK compile-time value", void 0)))
                 ]
             }, void 0, true, {
                 fileName: "[project]/src/components/apps/Paint.jsx",
-                lineNumber: 229,
-                columnNumber: 7
+                lineNumber: 260,
+                columnNumber: 9
             }, ("TURBOPACK compile-time value", void 0))
         ]
     }, void 0, true, {
         fileName: "[project]/src/components/apps/Paint.jsx",
-        lineNumber: 129,
-        columnNumber: 5
+        lineNumber: 160,
+        columnNumber: 7
     }, ("TURBOPACK compile-time value", void 0));
 };
-_s(Paint, "2nj5ls1Jk98rgTJb0xMicFvUYBQ=");
+_s(Paint, "0TxjVnz0vMrtkadROUxYNZsvhOs=");
 _c = Paint;
 const __TURBOPACK__default__export__ = Paint;
 var _c;
@@ -4555,7 +4582,7 @@ const OSProvider = ({ children })=>{
     };
     const getNextZIndex = ()=>{
         if (windows.length === 0) return 100;
-        const highest = Math.max(...windows.map((w)=>w.zIndex || 0));
+        const highest = Math.max(...windows.map((w)=>w.zIndex || 100));
         return highest + 1;
     };
     // Provider ki value

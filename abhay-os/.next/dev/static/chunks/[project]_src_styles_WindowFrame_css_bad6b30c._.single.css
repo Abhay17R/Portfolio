@@ -6,6 +6,7 @@
   flex-direction: column;
   animation: .15s cubic-bezier(.1, .9, .2, 1) popIn;
   display: flex;
+  position: absolute;
   top: 50px;
   left: 50px;
   overflow: hidden;
