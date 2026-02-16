@@ -335,4 +335,53 @@
   font-size: .7rem;
 }
 
+.wmp-container.is-fs {
+  z-index: 9999;
+  background: #000;
+  width: 100vw;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+}
+
+.is-fs .wmp-display-area {
+  height: calc(100vh - 80px);
+}
+
+.is-fs .wmp-controls {
+  background: #000c;
+  width: 100%;
+  position: absolute;
+  bottom: 0;
+}
+
+.drag-overlay {
+  z-index: 1000;
+  color: #00f3ff;
+  -webkit-backdrop-filter: blur(5px);
+  backdrop-filter: blur(5px);
+  background: #000c;
+  border: 2px dashed #00f3ff;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  display: flex;
+  position: absolute;
+  inset: 0;
+}
+
+.icon-btn.active {
+  color: #00f3ff;
+  text-shadow: 0 0 5px #00f3ff;
+}
+
+.tiny-badge {
+  font-size: 8px;
+  font-weight: bold;
+  position: absolute;
+  top: 0;
+  right: 0;
+}
+
 /*# sourceMappingURL=%5Bproject%5D_src_styles_WindowsMediaPlayer_css_bad6b30c._.single.css.map*/

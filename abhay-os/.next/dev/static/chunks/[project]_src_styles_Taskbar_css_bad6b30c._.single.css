@@ -1,6 +1,8 @@
 /* [project]/src/styles/Taskbar.css [app-client] (css) */
 .taskbar {
   z-index: 9999;
+  -webkit-user-select: none;
+  user-select: none;
   background: #202020f2;
   border-top: 1px solid #ffffff14;
   align-items: center;
@@ -41,6 +43,7 @@
 }
 
 .tb-icon img {
+  object-fit: contain;
   width: 24px;
   height: 24px;
   transition: all .1s;
@@ -56,7 +59,7 @@
   border-radius: 2px;
   width: 6px;
   height: 3px;
-  transition: width .2s;
+  transition: width .2s, background-color .2s;
   position: absolute;
   bottom: 2px;
 }
@@ -68,6 +71,7 @@
 .tb-icon.active:after {
   background-color: #00d8ff;
   width: 16px;
+  box-shadow: 0 0 4px #00d8ff;
 }
 
 .system-tray {
@@ -80,6 +84,7 @@
 
 .tray-icon {
   opacity: .8;
+  cursor: pointer;
   font-size: 16px;
 }
 
@@ -89,6 +94,7 @@
   white-space: nowrap;
   flex-direction: column;
   justify-content: center;
+  padding: 0 5px;
   font-size: 12px;
   display: flex;
 }
@@ -96,7 +102,6 @@
 .clock:hover {
   background-color: #ffffff1a;
   border-radius: 4px;
-  padding: 2px 5px;
 }
 
 @media (max-width: 600px) {

@@ -4,12 +4,17 @@
   border: 1px solid #333;
   border-radius: 8px;
   flex-direction: column;
-  max-width: 100vw;
-  max-height: calc(100vh - 48px);
-  animation: .2s cubic-bezier(.1, .9, .2, 1) popIn;
+  animation: .15s cubic-bezier(.1, .9, .2, 1) popIn;
   display: flex;
+  top: 50px;
+  left: 50px;
   overflow: hidden;
   box-shadow: 0 10px 40px #0009;
+}
+
+.os-window-frame.active {
+  border-color: #555;
+  box-shadow: 0 15px 50px #000c;
 }
 
 @keyframes popIn {
@@ -27,8 +32,10 @@
 .window-header {
   -webkit-user-select: none;
   user-select: none;
+  cursor: default;
   background: #2d2d2d;
   border-bottom: 1px solid #3a3a3a;
+  flex-shrink: 0;
   justify-content: space-between;
   align-items: center;
   height: 38px;
@@ -38,15 +45,12 @@
 
 .title-section {
   color: #e0e0e0;
+  pointer-events: none;
   align-items: center;
   gap: 10px;
   font-family: Segoe UI, sans-serif;
   font-size: 13px;
   display: flex;
-}
-
-.title-section img {
-  pointer-events: none;
 }
 
 .controls-section {
@@ -77,83 +81,12 @@
 
 .window-content {
   background-color: #191919;
+  flex-direction: column;
   flex: 1;
+  height: 100%;
+  display: flex;
   position: relative;
-  overflow: auto;
-}
-
-.resizer {
-  z-index: 1000;
-  background: none;
-  position: absolute;
-}
-
-.r-top {
-  cursor: n-resize;
-  height: 5px;
-  top: 0;
-  left: 0;
-  right: 0;
-}
-
-.r-bottom {
-  cursor: s-resize;
-  height: 5px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
-.r-left {
-  cursor: w-resize;
-  width: 5px;
-  top: 0;
-  bottom: 0;
-  left: 0;
-}
-
-.r-right {
-  cursor: e-resize;
-  width: 5px;
-  top: 0;
-  bottom: 0;
-  right: 0;
-}
-
-.r-tl {
-  cursor: nw-resize;
-  z-index: 1001;
-  width: 10px;
-  height: 10px;
-  top: 0;
-  left: 0;
-}
-
-.r-tr {
-  cursor: ne-resize;
-  z-index: 1001;
-  width: 10px;
-  height: 10px;
-  top: 0;
-  right: 0;
-}
-
-.r-bl {
-  cursor: sw-resize;
-  z-index: 1001;
-  width: 10px;
-  height: 10px;
-  bottom: 0;
-  left: 0;
-}
-
-.r-br {
-  cursor: se-resize;
-  z-index: 1001;
-  width: 10px;
-  height: 10px;
-  bottom: 0;
-  right: 0;
+  overflow: hidden;
 }
 
 /*# sourceMappingURL=%5Bproject%5D_src_styles_WindowFrame_css_bad6b30c._.single.css.map*/
