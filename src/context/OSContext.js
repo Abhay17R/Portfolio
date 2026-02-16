@@ -178,8 +178,8 @@ export const OSProvider = ({ children }) => {
 
   const getNextZIndex = () => {
     if (windows.length === 0) return 100;
-    const highest = Math.max(...windows.map((w) => w.zIndex || 0));
-    return highest + 1;
+    const highest = Math.max(...windows.map((w) => w.zIndex || 100));
+    return (highest + 1);
   };
 
   // Provider ki value

@@ -84,16 +84,16 @@ const WindowsMediaPlayer = () => {
   };
 
   const togglePiP = async () => {
-    try {
-      if (document.pictureInPictureElement) {
-        await document.exitPictureInPicture();
-      } else if (mediaRef.current && isVideo) {
-        await mediaRef.current.requestPictureInPicture();
-      }
-    } catch (error) {
-      console.error("PiP failed:", error);
+  try {
+    if (document.pictureInPictureElement) {
+      await document.exitPictureInPicture();
+    } else if (mediaRef.current && isVideo) {
+      await mediaRef.current.requestPictureInPicture();
     }
-  };
+  } catch (error) {
+    console.error("PiP failed:", error);
+  }
+};
 
   const handleTimeUpdate = () => {
     if(mediaRef.current) {
