@@ -197,3 +197,81 @@
   border: none;
   display: block;
 }
+/* ========================================= */
+/* --- MOBILE RESPONSIVENESS FOR CHROME --- */
+/* ========================================= */
+
+@media (max-width: 768px) {
+  /* Hide the top tabs bar on mobile to save space, like a real mobile browser */
+  .chrome-tabs-bar {
+    display: none;
+  }
+
+  /* Adjust Toolbar */
+  .chrome-toolbar {
+    height: 50px; /* Slightly taller for touch targets */
+    padding: 0 8px;
+    gap: 4px; /* Tighter gap */
+  }
+
+  .nav-buttons {
+    gap: 0px; /* Bring back/forward closer */
+  }
+
+  .icon-btn {
+    padding: 8px; /* Bigger touch target */
+  }
+
+  /* Optimize Omnibox (Search Bar) */
+  .omnibox {
+    padding: 0;
+  }
+
+  .omnibox-wrapper {
+    height: 36px; /* Taller for mobile typing */
+    padding: 0 10px;
+    gap: 6px;
+    border-radius: 18px;
+  }
+
+  .address-input {
+    font-size: 14px; /* Larger text for readability */
+  }
+
+  /* Hide unnecessary items in URL bar to save space */
+  .star-icon {
+    display: none; 
+  }
+
+  /* Hide Profile pic and menu to maximize URL bar space */
+  .profile-menu {
+    display: none; 
+  }
+
+  /* Make Bookmarks Bar horizontally scrollable */
+  .bookmarks-bar {
+    height: 36px;
+    padding: 0 8px;
+    overflow-x: auto;
+    white-space: nowrap;
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
+    /* Hide scrollbar */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .bookmarks-bar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .bookmark {
+    padding: 6px 10px;
+    font-size: 12px;
+    background-color: #f1f3f4; /* Make them look like pills */
+    border-radius: 16px;
+  }
+  
+  .bookmark:hover {
+    background-color: #e8eaed;
+  }
+}

@@ -221,3 +221,117 @@
 .card-actions a:hover {
   color: #00f3ff;
 }
+/* ========================================= */
+/* --- MOBILE RESPONSIVENESS FOR MY PROJECTS --- */
+/* ========================================= */
+
+@media (max-width: 768px) {
+  /* 1. Stack Sidebar and Main Content vertically */
+  .project-app-container {
+    flex-direction: column;
+    overflow-y: auto; /* Allow full app scrolling */
+  }
+
+  /* 2. Transform Sidebar into a Top Horizontal Nav Bar */
+  .project-sidebar {
+    width: 100%;
+    height: auto;
+    border-right: none;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    padding: 15px;
+    flex-direction: row;
+    align-items: center;
+    overflow-x: auto; /* Enable horizontal scroll for categories */
+    white-space: nowrap;
+    z-index: 10;
+    /* Hide scrollbar for cleaner look */
+    -ms-overflow-style: none;  
+    scrollbar-width: none;  
+  }
+  .project-sidebar::-webkit-scrollbar { 
+    display: none; 
+  }
+
+  .sidebar-header {
+    margin-bottom: 0;
+    margin-right: 20px; /* Space before category buttons */
+    font-size: 16px;
+  }
+
+  .category-nav {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+  }
+
+  .cat-btn {
+    margin-bottom: 0;
+    padding: 8px 15px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px; /* Pill shape for mobile */
+  }
+
+  .cat-btn:hover {
+    padding-left: 15px; /* Disable slide effect on mobile */
+  }
+
+  .cat-btn.active {
+    border-left: none;
+    border-bottom: 2px solid #00f3ff;
+  }
+
+  /* 3. Adjust Main Area */
+  .project-grid-area {
+    padding: 15px;
+    /* Important: let the parent handle the scroll on mobile */
+    overflow-y: visible; 
+  }
+
+  .grid-header {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 15px;
+    margin-bottom: 20px;
+  }
+
+  .grid-header h2 {
+    font-size: 20px;
+  }
+
+  .search-wrapper {
+    width: 100%;
+  }
+
+  .search-bar {
+    width: 100%; /* Full width search bar */
+  }
+
+  /* 4. Project Cards for Mobile View */
+  .projects-grid {
+    grid-template-columns: 1fr; /* 1 card per row */
+    gap: 20px;
+  }
+
+  .project-card {
+    /* Slightly bigger font for readability */
+    font-size: 14px; 
+  }
+
+  /* 5. Fix Hover Effects for Touch Devices */
+  /* On mobile, hover doesn't work well, so we make the Deep Dive button always visible but smaller, OR we show it on tap */
+  .card-overlay {
+    /* Optional: If you want the overlay always slightly visible on mobile */
+    background: linear-gradient(to top, rgba(0,0,0,0.8), transparent);
+    opacity: 1;
+    align-items: flex-end; /* Push button to bottom */
+    padding-bottom: 10px;
+  }
+
+  .overlay-btn {
+    transform: translateY(0);
+    padding: 6px 15px;
+    font-size: 12px;
+    background: rgba(0, 243, 255, 0.8);
+    color: white;
+  }
+}

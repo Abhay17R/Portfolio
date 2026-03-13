@@ -75,3 +75,288 @@ body {
   0% { transform: rotate(360deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+/* ========================================= */
+/* --- ANDROID OS STYLES (PURE CSS) --- */
+/* ========================================= */
+
+.android-os-container {
+  width: 100vw;
+  height: 100vh;
+  /* Agar wallpaper.jpg public folder me hai, toh wo yahan render hoga */
+  background: url('/wallpaper.jpg') center/cover no-repeat;
+  background-color: var(--bg-dark);
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* --- LOCK SCREEN --- */
+.android-lockscreen {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15vh 20px 5vh;
+  backdrop-filter: blur(8px);
+  background: rgba(0, 0, 0, 0.4);
+  cursor: grab;
+  transition: transform 0.1s ease-out; /* Smooth follow finger */
+}
+.android-lockscreen:active {
+  cursor: grabbing;
+}
+
+.lock-clock {
+  text-align: center;
+  text-shadow: 0 4px 15px rgba(0,0,0,0.8);
+}
+.lock-clock h1 {
+  font-size: 5rem;
+  font-weight: 300;
+  margin-bottom: 5px;
+  color: white;
+}
+.lock-clock p {
+  font-size: 1.2rem;
+  color: var(--text-main);
+  opacity: 0.9;
+}
+
+.swipe-hint {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  animation: pulse-up 2s infinite ease-in-out;
+  opacity: 0.8;
+  color: var(--text-main);
+}
+.swipe-hint .chevron {
+  font-size: 2.5rem;
+  font-family: var(--font-mono);
+  margin-bottom: -15px;
+  color: var(--primary-color);
+}
+
+@keyframes pulse-up {
+  0%, 100% { transform: translateY(0); opacity: 0.5; }
+  50% { transform: translateY(-15px); opacity: 1; }
+}
+
+/* --- APP LAUNCHER --- */
+.android-launcher {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  background: rgba(15, 15, 18, 0.4);
+  backdrop-filter: blur(5px);
+  animation: fadeIn 0.4s ease;
+}
+
+.android-status-bar {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 20px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: white;
+  text-shadow: 0 1px 3px rgba(0,0,0,0.8);
+}
+
+.app-grid {
+  flex: 1;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-auto-rows: min-content;
+  gap: 20px 15px;
+  padding: 40px 20px;
+}
+
+.app-icon {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+}
+
+.app-icon-img {
+  width: 55px;
+  height: 55px;
+  background: var(--glass-bg);
+  border: 1px solid var(--glass-border);
+  border-radius: 14px; /* Squircle look */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.8rem;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+  margin-bottom: 8px;
+  transition: transform 0.2s, background 0.2s;
+}
+
+.app-icon:active .app-icon-img {
+  transform: scale(0.9);
+  background: rgba(255, 255, 255, 0.15);
+}
+
+.app-icon span {
+  font-size: 0.75rem;
+  color: white;
+  text-shadow: 0 1px 4px rgba(0,0,0,0.9);
+  text-align: center;
+}
+
+.android-bottom-nav {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+.nav-pill {
+  width: 120px;
+  height: 4px;
+  background: white;
+  border-radius: 10px;
+  opacity: 0.6;
+}
+
+/* --- FULLSCREEN APPS --- */
+.android-app-fullscreen {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--bg-dark); /* Solid background for apps */
+  display: flex;
+  flex-direction: column;
+  z-index: 100;
+  animation: slideUp 0.35s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.android-nav-bar {
+  display: flex;
+  align-items: center;
+  padding: 15px;
+  background: var(--taskbar-bg);
+  border-bottom: 1px solid var(--glass-border);
+}
+
+.android-back-btn {
+  background: none;
+  border: none;
+  color: var(--primary-color);
+  font-size: 1rem;
+  font-weight: bold;
+  cursor: pointer;
+  margin-right: 15px;
+}
+
+.android-app-title {
+  color: white;
+  font-size: 1rem;
+  font-weight: 500;
+  letter-spacing: 1px;
+}
+
+.android-app-content {
+  flex: 1;
+  overflow-y: auto;
+  position: relative;
+}
+
+@keyframes slideUp {
+  from { transform: translateY(100%); opacity: 0; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes fadeIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+/* ========================================= */
+/* --- LOGIN SCREEN RESPONSIVE LAYOUT --- */
+/* ========================================= */
+
+.login-wrapper {
+  display: flex;
+  flex-direction: row; /* Desktop pe side-by-side */
+  width: 80%;
+  max-width: 1000px;
+  height: 550px;
+  background: rgba(20, 20, 30, 0.4);
+  backdrop-filter: blur(20px);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+  overflow: hidden;
+}
+
+.login-left {
+  flex: 1;
+  padding: 60px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  border-right: 1px solid rgba(255,255,255,0.05);
+  background: linear-gradient(135deg, rgba(255,255,255,0.03) 0%, transparent 100%);
+}
+
+.login-right {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Ye jadoo karega mobile pe */
+@media (max-width: 768px) {
+  .login-wrapper {
+    flex-direction: column; /* Mobile pe upar-neeche */
+    width: 90%;
+    height: 85vh; /* Taki screen se bahar na jaye */
+    overflow-y: auto; /* Agar screen choti ho toh scrollable ho jaye */
+  }
+
+  .login-left {
+    border-right: none;
+    border-bottom: 1px solid rgba(255,255,255,0.05);
+    padding: 30px 20px; /* Mobile pe thodi padding kam kar di */
+    align-items: center; /* Text center karne ke liye */
+    text-align: center;
+  }
+
+  .login-right {
+    padding: 20px;
+  }
+}
+/* ========================================= */
+/* --- LOGIN SCREEN RESPONSIVE LAYOUT --- */
+/* ========================================= */
+
+@media (max-width: 768px) {
+  .login-wrapper {
+    flex-direction: column !important; /* Upar-neeche stack karega */
+    width: 90% !important;
+    height: auto !important; /* Card ko stretch hone dega */
+    max-height: 85vh !important; /* Screen se bahar na jaye isliye max-height */
+    overflow-y: auto !important; /* Agar choti screen hai toh card ke andar scroll aayega */
+    justify-content: flex-start !important;
+  }
+
+  .login-left {
+    border-right: none !important;
+    border-bottom: 1px solid rgba(255,255,255,0.1) !important; /* Divider line */
+    padding: 30px 20px 20px 20px !important; 
+    flex: none !important; /* Left panel ko extra space khane se rokega */
+    align-items: center !important; 
+    text-align: center !important;
+  }
+
+  .login-right {
+    padding: 20px 20px 30px 20px !important;
+    flex: none !important;
+  }
+} 

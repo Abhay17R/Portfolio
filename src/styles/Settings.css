@@ -1,3 +1,7 @@
+/* ========================================= */
+/* --- DESKTOP (BASE) STYLES --- */
+/* ========================================= */
+
 .settings-container {
   display: flex;
   height: 100%;
@@ -149,3 +153,93 @@ input:checked + .slider:before { transform: translateX(24px); background-color: 
 
 .spec-item span { color: #444; }
 .spec-item .val { color: #00f3ff; margin-left: 5px; }
+
+
+/* ========================================= */
+/* --- MOBILE RESPONSIVENESS (JADOO) --- */
+/* ========================================= */
+
+@media (max-width: 768px) {
+  /* Stack Layout Vertically */
+  .settings-container {
+    flex-direction: column;
+  }
+
+  /* Transform Sidebar into Top Scrollable Nav */
+  .settings-sidebar {
+    width: 100%;
+    flex-direction: row;
+    padding: 10px 15px;
+    border-right: none;
+    border-bottom: 1px solid #1a1a1a;
+    overflow-x: auto;
+    white-space: nowrap;
+    /* Hide scrollbar for clean look */
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+  
+  .settings-sidebar::-webkit-scrollbar {
+    display: none;
+  }
+
+  .sidebar-item {
+    padding: 8px 15px;
+    border-left: none;
+    border-bottom: 2px solid transparent; /* Move active indicator to bottom */
+  }
+
+  .sidebar-item:hover, .sidebar-item.active {
+    border-left-color: transparent;
+    border-bottom-color: #00f3ff;
+  }
+
+  /* Main Content Adjustments */
+  .settings-main {
+    padding: 15px;
+  }
+
+  .settings-main h1 {
+    font-size: 1.3rem; /* Scale down title */
+    margin-bottom: 20px;
+    text-align: center;
+  }
+
+  .settings-section {
+    padding: 15px;
+  }
+
+  /* 2-Column Grid for Themes on Mobile */
+  .theme-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+  }
+
+  /* Prevent text overlapping with the toggle switch */
+  .setting-row {
+    padding: 12px 0;
+  }
+
+  .setting-info {
+    padding-right: 15px;
+  }
+
+  .setting-info p {
+    font-size: 0.65rem; /* Slightly smaller for fit */
+  }
+
+  /* Chaos Button Adjustment */
+  .chaos-btn {
+    font-size: 0.7rem;
+    padding: 8px 10px;
+  }
+
+  /* Stack System Specs neatly */
+  .system-specs {
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    margin-top: 25px;
+    padding: 15px 10px;
+  }
+}
