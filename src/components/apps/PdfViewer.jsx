@@ -1,15 +1,52 @@
+"use client";
 import React from 'react';
+import { useOS } from "@/context/OSContext";
 
 const PdfViewer = ({ fileUrl }) => {
-  const src = fileUrl || ""; 
+  const { isMobile } = useOS();
+  const src = fileUrl || "/resume.pdf";
 
-  if (!src) return <div style={{color:'white', padding:20}}>No File Found</div>;
+  // AGAR MOBILE HAI TOH IMAGE DIKHAO, DESKTOP HAI TOH IFRAME
+  if (isMobile) {
+    return (
+      <div style={{ 
+        width: '100%', 
+        height: '100%', 
+        background: '#121212', 
+        overflowY: 'auto',
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        padding: '10px'
+      }}>
+        <img 
+          src="/RESUME.JPG" // Apne resume ki image yahan daal
+          alt="Resume" 
+          style={{ width: '100%', height: 'auto', borderRadius: '8px' }} 
+        />
+        <a 
+          href={src} 
+          download 
+          style={{
+            marginTop: '20px',
+            padding: '12px 24px',
+            background: 'var(--primary-color)',
+            color: '#000',
+            borderRadius: '5px',
+            fontWeight: 'bold',
+            textDecoration: 'none'
+          }}
+        >
+          Download PDF Version
+        </a>
+      </div>
+    );
+  }
 
   return (
     <div style={{ width: '100%', height: '100%', background: '#333' }}>
       <iframe 
-        // Yahan se '#toolbar=0' hata diya hai taaki INBUILT options dikhein
-        src={src} 
+        src={`${src}#view=FitH`}
         title="PDF Viewer"
         style={{ width: '100%', height: '100%', border: 'none' }}
       />

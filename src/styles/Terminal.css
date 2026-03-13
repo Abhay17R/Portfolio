@@ -1,4 +1,6 @@
-/* src/styles/Terminal.css */
+/* ========================================= */
+/* --- DESKTOP (BASE) STYLES --- */
+/* ========================================= */
 @import url('https://fonts.googleapis.com/css2?family=VT323&display=swap');
 
 :root {
@@ -79,6 +81,7 @@
   margin-bottom: 5px;
   line-height: 1.3;
   text-shadow: 0 0 5px var(--term-glow); /* Glowing Text */
+  word-wrap: break-word; /* Lamba text screen se bahar na jaye */
 }
 
 .output-line.error { color: var(--term-error); text-shadow: 0 0 5px red; }
@@ -108,4 +111,41 @@
   outline: none;
   text-shadow: 0 0 5px var(--term-glow);
   caret-color: var(--term-text);
+}
+
+
+/* ========================================= */
+/* --- MOBILE RESPONSIVENESS (JADOO) --- */
+/* ========================================= */
+
+@media (max-width: 768px) {
+  .terminal-wrapper {
+    padding: 0px; /* Mobile pe pura edge-to-edge chahiye */
+    font-size: 1.1rem; /* Thoda adjust kiya screen size ke hisab se */
+  }
+
+  .terminal-body {
+    padding: 10px; /* Screen chhoti hoti hai toh gap kam karte hain */
+  }
+
+  .term-input {
+    /* Mobile browser mein auto-zoom rokne ke liye minimum 16px zaroori hota hai */
+    font-size: 1.2rem; 
+    padding: 5px 0;
+  }
+
+  .prompt-label {
+    margin-right: 6px;
+  }
+
+  /* Scanlines ka intensity thoda kam kiya taki mobile pe text clear padhne me aaye */
+  .scanlines {
+    background: linear-gradient(
+      to bottom,
+      rgba(255,255,255,0),
+      rgba(255,255,255,0) 50%,
+      rgba(0,0,0,0.15) 50%,
+      rgba(0,0,0,0.15)
+    );
+  }
 }

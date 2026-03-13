@@ -19,6 +19,7 @@ export const OSProvider = ({ children }) => {
 
   const [windows, setWindows] = useState([]);
   const [activeWindowId, setActiveWindowId] = useState(null);
+  const [theme, setTheme] = useState('cyan');
 
   // --- PERSISTENCE LOGIC START ---
 
@@ -188,6 +189,7 @@ export const OSProvider = ({ children }) => {
     windows, activeWindowId,
     openApp, closeWindow, focusWindow,
     toggleMinimize, toggleMaximize,
+    theme, setTheme
   };
 
   return (
