@@ -20,7 +20,7 @@
           padding: '10px'
         }}>
           <img 
-            src="/RESUME.jpg" // Apne resume ki image yahan daal
+            src="https://i.postimg.cc/9FznJvHR/RESUME.jpg" // Apne resume ki image yahan daal
             alt="Resume" 
             style={{ width: '100%', height: 'auto', borderRadius: '8px' }} 
           />
