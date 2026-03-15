@@ -15,7 +15,7 @@ export const metadata = {
   title: "Abhay Kumar Jha",
   description: "Brilliant Guy",
   icons: {
-    icon: "/icon.png", // public folder se pick hoga
+    icon: "/image.png", // public folder se pick hoga
   },
 };
 
